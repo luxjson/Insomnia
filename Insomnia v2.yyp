@@ -10,6 +10,7 @@
   },
   "defaultScriptType":0,
   "Folders":[
+    {"$GMFolder":"","%Name":"aud","folderPath":"folders/aud.yy","name":"aud","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"obj","folderPath":"folders/obj.yy","name":"obj","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"rooms","folderPath":"folders/rooms.yy","name":"rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"spr","folderPath":"folders/spr.yy","name":"spr","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -31,6 +32,7 @@
     {"id":{"name":"Font1","path":"fonts/Font1/Font1.yy",},},
     {"id":{"name":"obj_font","path":"objects/obj_font/obj_font.yy",},},
     {"id":{"name":"obj_tutorial","path":"objects/obj_tutorial/obj_tutorial.yy",},},
+    {"id":{"name":"objAudioControl","path":"objects/objAudioControl/objAudioControl.yy",},},
     {"id":{"name":"objCreditsButton","path":"objects/objCreditsButton/objCreditsButton.yy",},},
     {"id":{"name":"objCreditsText","path":"objects/objCreditsText/objCreditsText.yy",},},
     {"id":{"name":"objCreditsTitle","path":"objects/objCreditsTitle/objCreditsTitle.yy",},},
@@ -45,6 +47,7 @@
     {"id":{"name":"rm_settings","path":"rooms/rm_settings/rm_settings.yy",},},
     {"id":{"name":"rm_tutorial","path":"rooms/rm_tutorial/rm_tutorial.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"audThemeMainMenu","path":"sounds/audThemeMainMenu/audThemeMainMenu.yy",},},
     {"id":{"name":"sprBackgroundCredits","path":"sprites/sprBackgroundCredits/sprBackgroundCredits.yy",},},
     {"id":{"name":"sprBackgroundMenu","path":"sprites/sprBackgroundMenu/sprBackgroundMenu.yy",},},
     {"id":{"name":"Sprite1","path":"sprites/Sprite1/Sprite1.yy",},},

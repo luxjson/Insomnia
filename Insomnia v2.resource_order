@@ -1,5 +1,6 @@
 {
   "FolderOrderSettings":[
+    {"name":"aud","order":10,"path":"folders/aud.yy",},
     {"name":"obj","order":6,"path":"folders/obj.yy",},
     {"name":"rooms","order":9,"path":"folders/rooms.yy",},
     {"name":"spr","order":7,"path":"folders/spr.yy",},
@@ -8,6 +9,7 @@
     {"name":"Font1","order":4,"path":"fonts/Font1/Font1.yy",},
     {"name":"obj_font","order":8,"path":"objects/obj_font/obj_font.yy",},
     {"name":"obj_tutorial","order":9,"path":"objects/obj_tutorial/obj_tutorial.yy",},
+    {"name":"objAudioControl","order":10,"path":"objects/objAudioControl/objAudioControl.yy",},
     {"name":"objCreditsButton","order":2,"path":"objects/objCreditsButton/objCreditsButton.yy",},
     {"name":"objCreditsText","order":7,"path":"objects/objCreditsText/objCreditsText.yy",},
     {"name":"objCreditsTitle","order":8,"path":"objects/objCreditsTitle/objCreditsTitle.yy",},
