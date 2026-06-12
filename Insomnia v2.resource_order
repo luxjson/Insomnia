@@ -1,0 +1,26 @@
+{
+  "FolderOrderSettings":[
+    {"name":"obj","order":6,"path":"folders/obj.yy",},
+    {"name":"rooms","order":9,"path":"folders/rooms.yy",},
+    {"name":"spr","order":7,"path":"folders/spr.yy",},
+  ],
+  "ResourceOrderSettings":[
+    {"name":"Font1","order":4,"path":"fonts/Font1/Font1.yy",},
+    {"name":"obj_font","order":8,"path":"objects/obj_font/obj_font.yy",},
+    {"name":"obj_tutorial","order":9,"path":"objects/obj_tutorial/obj_tutorial.yy",},
+    {"name":"objCreditsButton","order":2,"path":"objects/objCreditsButton/objCreditsButton.yy",},
+    {"name":"objCreditsText","order":7,"path":"objects/objCreditsText/objCreditsText.yy",},
+    {"name":"objCreditsTitle","order":8,"path":"objects/objCreditsTitle/objCreditsTitle.yy",},
+    {"name":"objExitButton","order":3,"path":"objects/objExitButton/objExitButton.yy",},
+    {"name":"objSettingsButton","order":1,"path":"objects/objSettingsButton/objSettingsButton.yy",},
+    {"name":"objSettingsConfigButton","order":5,"path":"objects/objSettingsConfigButton/objSettingsConfigButton.yy",},
+    {"name":"objSettingsConfigTitle","order":6,"path":"objects/objSettingsConfigTitle/objSettingsConfigTitle.yy",},
+    {"name":"objVersionText","order":4,"path":"objects/objVersionText/objVersionText.yy",},
+    {"name":"rm_credits","order":2,"path":"rooms/rm_credits/rm_credits.yy",},
+    {"name":"rm_settings","order":1,"path":"rooms/rm_settings/rm_settings.yy",},
+    {"name":"rm_tutorial","order":3,"path":"rooms/rm_tutorial/rm_tutorial.yy",},
+    {"name":"sprBackgroundCredits","order":2,"path":"sprites/sprBackgroundCredits/sprBackgroundCredits.yy",},
+    {"name":"Sprite1","order":2,"path":"sprites/Sprite1/Sprite1.yy",},
+    {"name":"sprMainMenuLogoWhite","order":1,"path":"sprites/sprMainMenuLogoWhite/sprMainMenuLogoWhite.yy",},
+  ],
+}
