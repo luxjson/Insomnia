@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_tutorial_funcoes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_tutorial_funcoes",
+  "parent":{
+    "name":"scr",
+    "path":"folders/scr.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

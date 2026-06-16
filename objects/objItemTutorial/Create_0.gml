@@ -1,0 +1,2 @@
+
+coletavel = choose(true, false);

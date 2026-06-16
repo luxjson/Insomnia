@@ -8,8 +8,8 @@
   "name":"obj_font",
   "overriddenProperties":[],
   "parent":{
-    "name":"Insomnia v2",
-    "path":"Insomnia v2.yyp",
+    "name":"obj",
+    "path":"folders/obj.yy",
   },
   "parentObjectId":null,
   "persistent":false,
