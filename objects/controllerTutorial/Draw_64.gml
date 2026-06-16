@@ -277,10 +277,13 @@ if (menu_y_anim > -gui_h + 5) {
                 if (instance_exists(objPlayer)) {
                     var drop = instance_create_layer(objPlayer.x + 40, objPlayer.y, "Instances", objItemTutorial);
                     drop.coletavel = true;
-                }️
+                }
+                
+                
                 if (status_tutorial == 3 && itens_removidos_count >= 1 && itens_coletados == 4) {
                     fade_estado = "fade_out";
                 }
+                 
             }
             sub_menu_estado = "normal";
             delay_submenu = 0;
