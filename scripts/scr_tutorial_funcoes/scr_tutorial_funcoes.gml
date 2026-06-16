@@ -41,8 +41,8 @@ function ResetScene(stepNumber) {
                 break;
                 
             case 3:
-                controle.texto_guia = "Aperte I para o inventário. Pegue 5 itens com E. Para remover, arraste para fora da caixa.\nSegure Z para empurrar caixas nos marcadores.";
-                for (var i = 0; i < 10; i++) {
+                controle.texto_guia = "Aperte I para o inventário. Pegue 5 itens com E. Para remover, arraste para fora da caixa.  Segure Z para empurrar caixas nos marcadores.";
+                for (var i = 0; i < 5; i++) {
                     var it = instance_create_layer(cx + random_range(-250, 250), cy + random_range(-250, 250), camada_id, objItemTutorial);
                     it.coletavel = (i < 5); 
                 }
@@ -53,8 +53,10 @@ function ResetScene(stepNumber) {
                 break;
                 
             case 4:
-				controle.inventario_aberto = !controle.inventario_aberto;
-                controle.texto_guia = "Aperte X perto do inimigo. Segure para mais dano. Evite contato!";
+				if (controle.inventario_aberto = true) {
+					controle.inventario_aberto = !controle.inventario_aberto;
+				}
+				controle.texto_guia = "Aperte X perto do inimigo. Segure para mais dano. Evite contato!";
                 instance_create_layer(cx - 200, cy - 200, camada_id, objInimigoTutorial);
                 instance_create_layer(cx + 200, cy - 200, camada_id, objInimigoTutorial);
                 instance_create_layer(cx,       cy + 200, camada_id, objInimigoTutorial);
