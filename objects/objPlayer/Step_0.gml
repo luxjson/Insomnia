@@ -1,19 +1,30 @@
 var h_input = keyboard_check(vk_right) - keyboard_check(vk_left);
 var v_input = keyboard_check(vk_down) - keyboard_check(vk_up);
-
 var controle = instance_find(controllerTutorial, 0);
 
-if (controle != noone && !controle.menu_aberto) {
-    if (h_input != 0 || v_input != 0) {
-        var direcao = point_direction(0, 0, h_input, v_input);
-        x += lengthdir_x(velocidade, direcao);
-        y += lengthdir_y(velocidade, direcao);
-        
-        if (v_input < 0) olhando_para = "up";
-        else if (v_input > 0) olhando_para = "down";
-        else if (h_input > 0) olhando_para = "right";
-        else if (h_input < 0) olhando_para = "left";
+if (controle != noone) {
+    if (keyboard_check_pressed(ord("C"))) {
+        controle.menu_aberto = !controle.menu_aberto;
+        if (controle.menu_aberto) {
+            controle.foco_aba = true;
+            controle.menu_opcao_vertical = 0;
+            controle.slot_inv_selecionado = 0;
+        }
     }
+}
+
+if (controle == noone || controle.menu_aberto) {
+    exit;
+}
+
+if (h_input != 0 || v_input != 0) {
+    var direcao = point_direction(0, 0, h_input, v_input);
+    x += lengthdir_x(velocidade, direcao);
+    y += lengthdir_y(velocidade, direcao);
+    if (v_input < 0) olhando_para = "up";
+    else if (v_input > 0) olhando_para = "down";
+    else if (h_input > 0) olhando_para = "right";
+    else if (h_input < 0) olhando_para = "left";
 }
 
 var _meio_w = sprite_width / 2;
@@ -29,7 +40,7 @@ if (olhando_para == "left")  nova_sprite = spr_player_left;
 
 if (sprite_index != nova_sprite) {
     sprite_index = nova_sprite;
-    image_index = 0; 
+    image_index = 0;
 }
 if (h_input == 0 && v_input == 0) {
     image_index = 0;
@@ -44,11 +55,6 @@ if (controle != noone) {
     
     if (keyboard_check_pressed(vk_space)) {
         controle.modo_combate = !controle.modo_combate;
-    }
-    
-    if (keyboard_check_pressed(ord("C"))) {
-        controle.menu_aberto = !controle.menu_aberto;
-        controle.menu_opcao_vertical = 0;
     }
     
     for (var i = 1; i <= 5; i++) {
@@ -98,6 +104,16 @@ if (controle != noone) {
                     controle.dano_aplicado = 30;
                     controle.zoom_alvo = 0.82;
                 }
+                
+                var inimigo = instance_nearest(x, y, objInimigoTutorial);
+                if (inimigo != noone && distance_to_object(inimigo) < 60) {
+                    with (inimigo) {
+                        vida -= controle.dano_aplicado;
+                        if (vida <= 0) {
+                            instance_destroy();
+                        }
+                    }
+                }
             } else {
                 controle.combo_atual = 0;
                 controle.texto_combo = "ERROU!";
@@ -105,19 +121,25 @@ if (controle != noone) {
                 controle.dano_aplicado = 0;
             }
         } else {
-            var idx_bloco = asset_get_index("objBlocoTutorial");
+            var idx_bloco = asset_get_index("objCaixaTutorial");
             if (idx_bloco != -1) {
-                var bloco_empurravel = instance_nearest(x, y, idx_bloco);
-                if (bloco_empurravel != noone && distance_to_object(bloco_empurravel) < 10) {
+                var bloco = instance_nearest(x, y, idx_bloco);
+                if (bloco != noone && distance_to_object(bloco) < 10 && !bloco.travada) {
                     var dir_empurrar = 0;
                     if (olhando_para == "right") dir_empurrar = 0;
                     if (olhando_para == "up")    dir_empurrar = 90;
                     if (olhando_para == "left")  dir_empurrar = 180;
                     if (olhando_para == "down")  dir_empurrar = 270;
+                    var distancia = 20;
                     
-                    with(bloco_empurravel) {
-                        x += lengthdir_x(32, dir_empurrar);
-                        y += lengthdir_y(32, dir_empurrar);
+                    with(bloco) {
+                        x += lengthdir_x(distancia, dir_empurrar);
+                        y += lengthdir_y(distancia, dir_empurrar);
+                        if (x >= room_width / 2 + 200) {
+                            travada = true;
+                            x = room_width / 2 + 250;
+                            show_debug_message("Caixa encaixada com sucesso!");
+                        }
                     }
                 }
             }

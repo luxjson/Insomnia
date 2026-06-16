@@ -18,6 +18,7 @@ function ResetScene(stepNumber) {
         controle.itens_coletados = 0;
         controle.itens_removidos_count = 0;
         controle.inimigos_derrotados = 0;
+		controle.dano_aplicado = 0;
         controle.caixas_encaixadas = 0; 
         
         var cx = room_width / 2;
