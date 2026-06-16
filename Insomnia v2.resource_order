@@ -1,9 +1,9 @@
 {
   "FolderOrderSettings":[
-    {"name":"snd","order":11,"path":"folders/snd.yy",},
     {"name":"obj","order":6,"path":"folders/obj.yy",},
     {"name":"rooms","order":9,"path":"folders/rooms.yy",},
     {"name":"scr","order":10,"path":"folders/scr.yy",},
+    {"name":"snd","order":11,"path":"folders/snd.yy",},
     {"name":"spr","order":7,"path":"folders/spr.yy",},
   ],
   "ResourceOrderSettings":[
