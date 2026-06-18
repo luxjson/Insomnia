@@ -1,0 +1,11 @@
+draw_set_color(c_black);
+draw_rectangle(x - 4, y - 120, x + 4, y + 120, false);
+draw_set_color(c_white);
+draw_rectangle(x - 2, y - 118, x + 2, y + 118, true);
+draw_set_color(c_red);
+draw_rectangle(x - 6, y - 122, x + 6, y - 110, false);
+draw_rectangle(x - 6, y + 110, x + 6, y + 122, false);
+draw_set_color(c_white);
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+draw_text(x, y - 130, "FINISH");

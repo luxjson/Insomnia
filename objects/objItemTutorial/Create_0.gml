@@ -1,2 +1,4 @@
-
-coletavel = choose(true, false);
+coletavel = true;
+nome = "Item";
+tipo = "normal";
+valor = 0;

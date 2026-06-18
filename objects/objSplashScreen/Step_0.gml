@@ -1,6 +1,5 @@
 if (status == 1) {
     if (logo_alpha < 1) logo_alpha += 0.05;
-    
     if (progresso < 1) {
         progresso += 1 / tempo_carregamento;
     } else {

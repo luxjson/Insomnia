@@ -1,7 +1,6 @@
 status = 0;
 logo_alpha = 0;
 menu_fade = 1;
-
 progresso = 0;
 tempo_carregamento = game_get_speed(gamespeed_fps) * 3;
 
@@ -24,5 +23,4 @@ ini_close();
 
 window_set_fullscreen(fullscreen);
 audio_master_gain(audio_volume);
-
-game_set_speed(60, gamespeed_fps); 
+game_set_speed(60, gamespeed_fps);

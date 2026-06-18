@@ -1,4 +1,5 @@
 global.fonteNormal = font_add("Poppins-bold.ttf", 24, false, false, 32, 128);
+global.fonteMenu = font_add("Poppins-bold.ttf", 32, false, false, 32, 128);
 global.fonteTitulo = font_add("Poppins-bold.ttf", 48, false, false, 32, 128);
 global.fonteLegenda = font_add("Poppins-bold.ttf", 12, false, false, 32, 128);
 

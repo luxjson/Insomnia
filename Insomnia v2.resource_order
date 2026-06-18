@@ -17,6 +17,8 @@
     {"name":"objExitButton","order":3,"path":"objects/objExitButton/objExitButton.yy",},
     {"name":"objInimigoTutorial","order":17,"path":"objects/objInimigoTutorial/objInimigoTutorial.yy",},
     {"name":"objItemTutorial","order":15,"path":"objects/objItemTutorial/objItemTutorial.yy",},
+    {"name":"objLinhaChegada","order":19,"path":"objects/objLinhaChegada/objLinhaChegada.yy",},
+    {"name":"objMarcadorCaixa","order":20,"path":"objects/objMarcadorCaixa/objMarcadorCaixa.yy",},
     {"name":"objMedalhaTutorial","order":18,"path":"objects/objMedalhaTutorial/objMedalhaTutorial.yy",},
     {"name":"objNpcTutorial","order":14,"path":"objects/objNpcTutorial/objNpcTutorial.yy",},
     {"name":"objPlayer","order":12,"path":"objects/objPlayer/objPlayer.yy",},
