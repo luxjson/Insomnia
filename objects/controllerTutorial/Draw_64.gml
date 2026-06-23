@@ -28,12 +28,14 @@ if (mostrar_round) {
     draw_set_alpha(1);
 }
 
-letreiro_x -= letreiro_velocidade;
-var texto_w = string_width(texto_guia);
-if (letreiro_x < -texto_w) letreiro_x = gui_w;
-draw_text(letreiro_x, 20, texto_guia);
+if (!janela_missao_aberta) {
+    letreiro_x -= letreiro_velocidade;
+    var texto_w = string_width(texto_guia);
+    if (letreiro_x < -texto_w) letreiro_x = gui_w;
+    draw_text(letreiro_x, 20, texto_guia);
+}
 
-if (status_tutorial < 6 && !exibir_popup) {
+if (status_tutorial < 6 && !exibir_popup && !janela_missao_aberta) {
     var bw = 120, bh = 30, bx1 = gui_w - bw - 20, by1 = 80, bx2 = gui_w - 20, by2 = by1 + bh;
     var m_sobre = (mx >= bx1 && mx <= bx2 && my >= by1 && my <= by2);
     if (m_sobre) {
@@ -51,20 +53,16 @@ if (status_tutorial < 6 && !exibir_popup) {
 }
 
 var hp_x = 40, hp_y = gui_h - 100;
-
-//box hp uhuu
-
-    var hp_w = 300, hp_h = 40;
-    draw_set_color(c_black);
-    draw_rectangle(hp_x, hp_y, hp_x + hp_w, hp_y + hp_h, false);
-    draw_set_color(c_red);
-    draw_rectangle(hp_x + 4, hp_y + 4, hp_x + hp_w - 4, hp_y + hp_h - 4, false);
-    draw_set_color(c_lime);
-    draw_rectangle(hp_x + 4, hp_y + 4, hp_x + 4 + ((hp_w - 10) * (player_hp / player_max_hp)), hp_y + hp_h - 4, false);
-    draw_set_color(c_white);
-    draw_set_halign(fa_center); draw_set_valign(fa_middle);
-    draw_text(hp_x + hp_w/2, hp_y + hp_h/2, "HP: " + string(player_hp));
-
+var hp_w = 300, hp_h = 40;
+draw_set_color(c_black);
+draw_rectangle(hp_x, hp_y, hp_x + hp_w, hp_y + hp_h, false);
+draw_set_color(c_red);
+draw_rectangle(hp_x + 4, hp_y + 4, hp_x + hp_w - 4, hp_y + hp_h - 4, false);
+draw_set_color(c_lime);
+draw_rectangle(hp_x + 4, hp_y + 4, hp_x + 4 + ((hp_w - 10) * (player_hp / player_max_hp)), hp_y + hp_h - 4, false);
+draw_set_color(c_white);
+draw_set_halign(fa_center); draw_set_valign(fa_middle);
+draw_text(hp_x + hp_w/2, hp_y + hp_h/2, "HP: " + string(player_hp));
 
 var sprint_atual = (instance_exists(objPlayer)) ? objPlayer.sprint_atual : 100;
 var s_x = hp_x, s_y = hp_y + 50, s_w = 300, s_h = 20;
@@ -420,6 +418,35 @@ if (loja_aberta && loja_npc != noone) {
     draw_text(lx + lw/2, ly + lh - 12, "ARROWS - Select   Z - Buy   X - Close");
     
     draw_set_alpha(1);
+}
+
+if (janela_missao_aberta) {
+    var j_x1 = 60, j_y1 = 60, j_x2 = gui_w - 60, j_y2 = gui_h - 120;
+    
+    draw_set_color(c_black);
+    draw_rectangle(j_x1, j_y1, j_x2, j_y2, false);
+    draw_set_color(c_white);
+    draw_rectangle(j_x1 + 3, j_y1 + 3, j_x2 - 3, j_y2 - 3, true);
+    draw_set_color(c_black);
+    draw_rectangle(j_x1 + 5, j_y1 + 5, j_x2 - 5, j_y2 - 5, true);
+    
+    draw_set_color(c_yellow);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_top);
+    draw_set_font(global.fonteLM);
+    draw_text(gui_w / 2, j_y1 + 40, "STAGE " + string(status_tutorial) + " - NEW MISSION");
+    
+    draw_set_color(c_white);
+    draw_line(j_x1 + 20, j_y1 + 90, j_x2 - 20, j_y1 + 90);
+    
+    draw_set_font(global.fonteNormal);
+    draw_set_valign(fa_middle);
+    draw_text_ext(gui_w / 2, (j_y1 + j_y2) / 2, texto_guia, 32, (j_x2 - j_x1) - 100);
+    
+    draw_set_color(c_yellow);
+    draw_set_valign(fa_bottom);
+    draw_set_font(global.fonteLegenda);
+    draw_text(gui_w / 2, j_y2 - 30, "PRESS Z OR X TO START");
 }
 
 if (fade_alpha > 0) {

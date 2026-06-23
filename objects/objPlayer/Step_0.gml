@@ -1,3 +1,15 @@
+if (morto) {
+    sprite_index = spr_player_death;
+    var frame_final_death = death_frame_inicial + 7;
+    if (image_index < death_frame_inicial || image_index > frame_final_death) {
+        image_index = frame_final_death;
+        image_speed = 0;
+    }
+    exit;
+}
+
+if (dash_cooldown > 0) dash_cooldown--;
+
 var h_input = keyboard_check(vk_right) - keyboard_check(vk_left);
 var v_input = keyboard_check(vk_down) - keyboard_check(vk_up);
 controle = instance_find(controllerTutorial, 0);
@@ -17,14 +29,81 @@ if (controle == noone || controle.menu_aberto) {
     exit;
 }
 
-if (h_input != 0 || v_input != 0) {
-    var direcao = point_direction(0, 0, h_input, v_input);
-    x += lengthdir_x(velocidade, direcao);
-    y += lengthdir_y(velocidade, direcao);
-    if (v_input < 0) olhando_para = "up";
-    else if (v_input > 0) olhando_para = "down";
-    else if (h_input > 0) olhando_para = "right";
-    else if (h_input < 0) olhando_para = "left";
+if (estado == "dash") {
+    x += lengthdir_x(dash_velocidade, dir_dash_atual);
+    y += lengthdir_y(dash_velocidade, dir_dash_atual);
+    
+    sprite_index = spr_player_dash;
+    
+    dash_timer--;
+    if (dash_timer <= 0) {
+        estado = "normal";
+        dash_cooldown = 20;
+    }
+} else if (estado == "normal") {
+    if (keyboard_check_pressed(vk_lshift) && dash_cooldown <= 0) {
+        estado = "dash";
+        dash_timer = dash_duracao;
+        if (h_input != 0 || v_input != 0) {
+            dir_dash_atual = point_direction(0, 0, h_input, v_input);
+        } else {
+            switch (olhando_para) {
+                case "right":      dir_dash_atual = 0; break;
+                case "right_up":   dir_dash_atual = 45; break;
+                case "up":         dir_dash_atual = 90; break;
+                case "left_up":    dir_dash_atual = 135; break;
+                case "left":       dir_dash_atual = 180; break;
+                case "left_down":  dir_dash_atual = 225; break;
+                case "down":       dir_dash_atual = 270; break;
+                case "right_down": dir_dash_atual = 315; break;
+            }
+        }
+    }
+
+    if (estado == "normal" && (h_input != 0 || v_input != 0)) {
+        var direcao = point_direction(0, 0, h_input, v_input);
+        x += lengthdir_x(velocidade, direcao);
+        y += lengthdir_y(velocidade, direcao);
+        
+        if (direcao >= 337.5 || direcao < 22.5)       olhando_para = "right";
+        else if (direcao >= 22.5 && direcao < 67.5)   olhando_para = "right_up";
+        else if (direcao >= 67.5 && direcao < 112.5)  olhando_para = "up";
+        else if (direcao >= 112.5 && direcao < 157.5) olhando_para = "left_up";
+        else if (direcao >= 157.5 && direcao < 202.5) olhando_para = "left";
+        else if (direcao >= 202.5 && direcao < 247.5) olhando_para = "left_down";
+        else if (direcao >= 247.5 && direcao < 292.5) olhando_para = "down";
+        else if (direcao >= 292.5 && direcao < 337.5) olhando_para = "right_down";
+        
+        sprite_index = spr_player;
+    } else if (estado == "normal") {
+        sprite_index = spr_player_idle;
+    }
+}
+
+if (sprite_index == spr_player_idle) {
+    if (olhando_para == "down")       frame_inicial = 0;
+    if (olhando_para == "left")       frame_inicial = 8;
+    if (olhando_para == "left_up")    frame_inicial = 16;
+    if (olhando_para == "up")         frame_inicial = 24;
+    if (olhando_para == "right_up")   frame_inicial = 32;
+    if (olhando_para == "right")      frame_inicial = 40;
+    if (olhando_para == "left_down")  frame_inicial = 0; 
+    if (olhando_para == "right_down") frame_inicial = 0; 
+} else {
+    if (olhando_para == "down")       frame_inicial = 0;
+    if (olhando_para == "left")       frame_inicial = 8;
+    if (olhando_para == "left_up")    frame_inicial = 16;
+    if (olhando_para == "up")         frame_inicial = 24;
+    if (olhando_para == "right_up")   frame_inicial = 32;
+    if (olhando_para == "right")      frame_inicial = 40;
+    if (olhando_para == "left_down")  frame_inicial = 0; 
+    if (olhando_para == "right_down") frame_inicial = 0; 
+}
+
+var frame_final = frame_inicial + 7;
+
+if (image_index < frame_inicial || image_index > frame_final) {
+    image_index = frame_inicial;
 }
 
 var _meio_w = sprite_width/2, _meio_h = sprite_height/2;
@@ -35,22 +114,14 @@ if (place_meeting(x, y, objCaixaTutorial)) { x = xprevious; y = yprevious; }
 if (place_meeting(x, y, objInimigoTutorial)) { x = xprevious; y = yprevious; }
 if (place_meeting(x, y, objNpcTutorial)) { x = xprevious; y = yprevious; }
 
-var nova_sprite = sprite_index;
-if (olhando_para == "up") nova_sprite = spr_player_back;
-if (olhando_para == "down") nova_sprite = spr_player;
-if (olhando_para == "right") nova_sprite = spr_player_right;
-if (olhando_para == "left") nova_sprite = spr_player_left;
-if (sprite_index != nova_sprite) { sprite_index = nova_sprite; image_index = 0; }
-if (h_input == 0 && v_input == 0) image_index = 0;
-
 if (controle != noone) {
-    if (keyboard_check(vk_lshift) && sprint_atual > 0) {
-        velocidade = 12;
+    if (keyboard_check(vk_lshift) && sprint_atual > 0 && estado == "normal") {
+        velocidade = dash_velocidade;
         sprint_atual -= 0.5;
         if (sprint_atual < 0) sprint_atual = 0;
     } else {
         if (sprint_atual < 100) sprint_atual += 0.2;
-        if (!keyboard_check(vk_lshift)) velocidade = 5;
+        if (!keyboard_check(vk_lshift)) velocidade = velocidade;
     }
 
     if (keyboard_check_pressed(vk_space)) {
@@ -71,13 +142,6 @@ if (controle != noone) {
     if (controle.zoom_ataque_atual <= controle.zoom_ataque_alvo + 0.01) controle.zoom_ataque_alvo = 1.0;
     camera_set_view_size(view_camera, 1920 * controle.zoom_ataque_atual, 1080 * controle.zoom_ataque_atual);
     if (controle.dano_timer > 0) controle.dano_timer--;
-
-    if (dano_timer_player > 0) {
-        image_blend = c_red;
-        dano_timer_player--;
-    } else {
-        image_blend = c_white;
-    }
 
     if (keyboard_check_pressed(ord("X"))) {
         if (controle.loja_aberta) {
@@ -110,10 +174,14 @@ if (controle != noone) {
                 if (bloco != noone && distance_to_object(bloco) < 40 && !bloco.travada) {
                     var dir_empurrar = 0;
                     switch (olhando_para) {
-                        case "right": dir_empurrar = 0; break;
-                        case "up":    dir_empurrar = 90; break;
-                        case "left":  dir_empurrar = 180; break;
-                        case "down":  dir_empurrar = 270; break;
+                        case "right":      dir_empurrar = 0; break;
+                        case "right_up":   dir_empurrar = 45; break;
+                        case "up":         dir_empurrar = 90; break;
+                        case "left_up":    dir_empurrar = 135; break;
+                        case "left":       dir_empurrar = 180; break;
+                        case "left_down":  dir_empurrar = 225; break;
+                        case "down":       dir_empurrar = 270; break;
+                        case "right_down": dir_empurrar = 315; break;
                     }
                     var passo = 20;
                     with (bloco) {

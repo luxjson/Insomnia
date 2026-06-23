@@ -53,6 +53,7 @@ loja_nomes = [];
 loja_sprites = [];
 loja_alpha = 0;
 loja_scale = 0.5;
+janela_missao_aberta = true;
 
 ini_open("configuracoes.ini");
 fullscreen = ini_read_real("Video", "Fullscreen", false);

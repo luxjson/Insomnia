@@ -80,7 +80,7 @@ function ResetScene(stepNumber) {
                 controle.texto_guia = "Race against the NPC to the finish line! Hold SHIFT to sprint.";
                 var npc = instance_create_layer(cx - 300, cy, camada, objNpcTutorial);
                 npc.tipo = "corredor";
-                npc.velocidade_corrida = 2;
+                npc.velocidade_corrida = 8;
                 instance_create_layer(cx + 400, cy - 100, camada, objLinhaChegada);
                 instance_create_layer(cx + 400, cy + 100, camada, objLinhaChegada);
                 break;

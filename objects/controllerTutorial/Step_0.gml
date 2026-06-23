@@ -17,7 +17,17 @@ if (fade_estado == "switch") {
     } else {
         ResetScene(status_tutorial + 1);
     }
+    janela_missao_aberta = true;
     fade_estado = "fade_in";
+}
+
+if (janela_missao_aberta) {
+    if (fade_alpha < 0.5) {
+        if (keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(ord("X"))) {
+            janela_missao_aberta = false;
+        }
+    }
+    exit;
 }
 
 if (status_tutorial == 5 && instance_exists(objPlayer) && instance_exists(objItemTutorial)) {
