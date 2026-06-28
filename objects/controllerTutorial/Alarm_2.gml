@@ -1,1 +1,0 @@
-texto_guia = "Race against the NPC! Hold SHIFT to sprint.";
