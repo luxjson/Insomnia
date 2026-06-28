@@ -5,7 +5,6 @@ var gui_w = display_get_gui_width();
 var gui_h = display_get_gui_height();
 var base_x = gui_w / 2;
 
-// 1. Desenhar Ambiência (Pixels ciano finos caindo ao fundo)
 draw_set_color(c_aqua);
 draw_set_alpha(0.4);
 for (var i = 0; i < max_pixels; i++) {
@@ -15,17 +14,14 @@ for (var i = 0; i < max_pixels; i++) {
 draw_set_alpha(1.0);
 draw_set_color(c_white);
 
-// 2. Renderização de Diálogos, Textos e Escolhas dinâmicas
 if (current_text_index < array_length(history_texts)) {
     draw_set_font(global.fonteNormal); draw_set_halign(fa_center); draw_set_valign(fa_middle);
     if (show_menu_buttons && !config_open && !save_menu_open) draw_set_alpha(1.0); else draw_set_alpha(text_alpha);
     
     var is_question = (current_text_index == 12 || current_text_index == 14 || current_text_index == 16 || current_text_index == 18 || current_text_index == 20 || current_text_index == 22 || current_text_index == 24);
     
-    // Identifica se o slide atual é uma réplica inserida pelo jogo (slides ímpares entre 13 e 25)
     var is_game_reply = (current_text_index % 2 != 0 && current_text_index >= 13 && current_text_index <= 25);
     
-    // Slide Final
     if (current_text_index == array_length(history_texts) - 1) {
         var p1 = "Tomorrow will be a better "; var p2 = "DAY.";
         var w1 = string_width(p1) * text_scale; var w2 = string_width(p2) * text_scale;
@@ -33,7 +29,6 @@ if (current_text_index < array_length(history_texts)) {
         draw_set_color(c_white); draw_text_transformed(start_x + (w1/2), gui_h / 2, p1, text_scale, text_scale, 0);
         draw_set_color(c_yellow); draw_text_transformed(start_x + w1 + (w2/2), gui_h / 2, p2, text_scale, text_scale, 0);
     } 
-    // Slide do Atropelamento
     else if (current_text_index == 8) {
         var p1 = "And honestly? "; var p2 = "A quiet part of me didn't care if it hit me.";
         var w1 = string_width(p1) * text_scale; var w2 = string_width(p2) * text_scale;
@@ -41,7 +36,6 @@ if (current_text_index < array_length(history_texts)) {
         draw_set_color(c_white); draw_text_transformed(start_x + (w1/2), gui_h / 2, p1, text_scale, text_scale, 0);
         draw_set_color(c_aqua); draw_text_transformed(start_x + w1 + (w2/2), gui_h / 2, p2, text_scale, text_scale, 0);
     }
-    // Caixa Interativa de Perguntas Psicológicas
     else if (is_question) {
         draw_set_color(c_aqua); draw_text_ext_transformed(base_x, gui_h / 2 - 60, history_texts[current_text_index], 28, gui_w - 200, text_scale, text_scale, 0);
         
@@ -55,18 +49,15 @@ if (current_text_index < array_length(history_texts)) {
             draw_text_transformed(base_x, choice_y_start + (i * 35), choice_label, text_scale, text_scale, 0);
         }
     }
-    // RENDERIZAÇÃO DAS RÉPLICAS DO JOGO E DA QUARTA PAREDE (Tudo em Ciano sutil e integrado)
     else if (is_game_reply || current_text_index == 26 || current_text_index == 27) {
         draw_set_color(c_aqua); 
         draw_text_ext_transformed(base_x, gui_h / 2, history_texts[current_text_index], 28, gui_w - 200, text_scale, text_scale, 0);
     }
-    // TEXTO BRANCO PADRÃO
     else {
         draw_set_color(c_white); draw_text_ext_transformed(base_x, gui_h / 2, history_texts[current_text_index], 28, gui_w - 200, text_scale, text_scale, 0);
     }
 }
 
-// 3. Renderização do Menu Principal (4 Opções)
 if (show_menu_buttons && !config_open && !save_menu_open) {
     draw_set_font(global.fonteNormal); draw_set_halign(fa_center); draw_set_valign(fa_middle); draw_set_alpha(1.0);
     
@@ -92,7 +83,6 @@ if (show_menu_buttons && !config_open && !save_menu_open) {
     }
 }
 
-// Estilhaços
 for (var i = 0; i < array_length(shatter_particles); i++) {
     var p = shatter_particles[i];
     draw_set_color(c_red); draw_set_alpha(p.alpha);
@@ -100,7 +90,6 @@ for (var i = 0; i < array_length(shatter_particles); i++) {
 }
 draw_set_alpha(1.0);
 
-// 4. Sub-Menu de Saves
 if (save_menu_open) {
     draw_set_alpha(1.0);
     var box_w = 420; var box_h = 240;
@@ -127,7 +116,6 @@ if (save_menu_open) {
     }
 }
 
-// 5. Configurações
 if (config_y > -350) {
     draw_set_alpha(1.0); draw_set_color(c_black); draw_rectangle(50, config_y + 10, gui_w - 50, config_y + 320, false);
     draw_set_color(c_aqua);
@@ -172,7 +160,6 @@ if (config_y > -350) {
     }
 }
 
-// 6. Transição de Slices
 if (is_transitioning) {
     draw_set_color(c_aqua); draw_set_alpha(1.0);
     var slice_height = gui_h / slice_count;

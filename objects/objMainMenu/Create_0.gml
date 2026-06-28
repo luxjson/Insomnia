@@ -35,5 +35,6 @@ credits_text = ["INSOMNIA TEAM", "", "Director\nLUXJSON", "", "Programmer\nLUXJS
 spacing = 45;
 
 if (!audio_is_playing(mus_menu)) {
-    audio_play_sound(mus_menu, 10, true);
+    var som_menu = audio_play_sound(mus_menu, 10, true);
+    audio_sound_gain(som_menu, global.vol_bgm, 0);
 }

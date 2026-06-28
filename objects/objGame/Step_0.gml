@@ -1,13 +1,13 @@
 if (config_cooldown > 0) config_cooldown--;
 
+
 if (!config_open && !save_menu_open && !is_transitioning) {
     if (!show_menu_buttons) {
         
-        // Mapeamento dos índices exatos de perguntas no novo array de 29 posições
         var is_question = (current_text_index == 12 || current_text_index == 14 || current_text_index == 16 || current_text_index == 18 || current_text_index == 20 || current_text_index == 22 || current_text_index == 24);
         
         switch (text_state) {
-            case 0: // Fade In
+            case 0:
                 if (keyboard_check_pressed(ord("Z")) && !is_question) {
                     text_alpha = 1; text_state = 1; text_timer = 0;
                 } else {
@@ -16,28 +16,25 @@ if (!config_open && !save_menu_open && !is_transitioning) {
                 }
                 break;
                 
-            case 1: // Texto visível
+            case 1:
                 if (is_question) {
                     if (keyboard_check_pressed(vk_up)) { choice_index--; if (choice_index < 0) choice_index = 2; }
                     if (keyboard_check_pressed(vk_down)) { choice_index++; if (choice_index > 2) choice_index = 0; }
                     
                     if (keyboard_check_pressed(ord("Z"))) {
-                        // Calcula qual o número da pergunta (0 a 6)
                         var q_idx = (current_text_index - 12) / 2;
                         global.history_answers[q_idx] = choice_index;
                         
-                        // INSERÇÃO FLUIDA: Copia a resposta para a string vazia do próximo slide!
                         history_texts[current_text_index + 1] = game_replies[q_idx][choice_index];
                         
                         choice_index = 0; 
-                        text_state = 2; // Passa para o fade out natural para exibir a resposta a seguir
+                        text_state = 2;
                     }
                 } else {
                     text_timer++;
                     if (text_timer >= text_duration || keyboard_check_pressed(ord("Z"))) {
                         
-                        // ANÁLISE DE PERFIL: Roda exatamente após a última resposta do jogo (slide 25) ser lida
-                        if (current_text_index == 25) {
+                       if (current_text_index == 25) {
                             var negative_points = 0;
                             for(var i = 0; i < 7; i++) { if (global.history_answers[i] == 0) negative_points++; }
                             
@@ -50,7 +47,7 @@ if (!config_open && !save_menu_open && !is_transitioning) {
                 }
                 break;
                 
-            case 2: // Fade Out
+            case 2:
                 if (keyboard_check_pressed(ord("Z")) && !is_question) {
                     text_alpha = 0; current_text_index++;
                     if (current_text_index >= array_length(history_texts)) show_menu_buttons = true;
@@ -263,7 +260,12 @@ if (is_transitioning) {
     }
     if (all_slices_full) {
         transition_timer++;
-        if (transition_timer == 1) room_goto(rm_gameplay);
+        if (transition_timer == 1) room_goto(rm_dev);
         if (transition_timer >= 30) instance_destroy();
     }
+}
+
+if (keyboard_check_pressed(ord("Z"))) {
+    var sfx = audio_play_sound(snd_beep, 1, false);
+    audio_sound_gain(sfx, global.vol_sfx, 0);
 }

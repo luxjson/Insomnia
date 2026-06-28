@@ -31,10 +31,11 @@ if (current_state == MENU_STATE.MAIN) {
         if (!is_fading && mx >= x1 && mx <= x2 && my >= y1 && my <= y2) {
             draw_set_color(c_aqua);
             if (mouse_check_button_pressed(mb_left)) {
-                audio_play_sound(snd_beep, 1, false);
+                var sfx = audio_play_sound(snd_beep, 1, false);
+				audio_sound_gain(sfx, global.vol_sfx, 0);
                 switch (i) {
                     case 0:
-                        fade_target_room = rm_game;
+                        fade_target_room = rm_loading;
                         is_fading = true;
                         break;
                     case 1:
@@ -62,7 +63,7 @@ if (current_state == MENU_STATE.MAIN) {
     draw_set_font(global.fonteLegenda);
     draw_set_color(c_gray);
     draw_set_alpha(menu_alpha);
-    draw_text(base_x, gui_h - 20, "V0.03b");
+    draw_text(base_x, gui_h - 20, "V0.10b");
 }
 
 else if (current_state == MENU_STATE.SETTINGS) {
@@ -99,7 +100,8 @@ else if (current_state == MENU_STATE.SETTINGS) {
         if (!is_fading && mx >= x1 && mx <= x2 && my >= y1 && my <= y2) {
             draw_set_color(c_aqua);
             if (mouse_check_button_pressed(mb_left)) {
-                audio_play_sound(snd_beep, 1, false);
+                var sfx = audio_play_sound(snd_beep, 1, false);
+				audio_sound_gain(sfx, global.vol_sfx, 0);
                 switch (i) {
                     case 0:
                         global.fullscreen = !global.fullscreen;
@@ -110,20 +112,24 @@ else if (current_state == MENU_STATE.SETTINGS) {
                         alarm[11] = 2;
                         break;
                     case 1:
-                        global.vol_bgm += 0.1;
-                        if (global.vol_bgm > 1.05) global.vol_bgm = 0;
-                        ini_open("configuracoes.ini");
-                        ini_write_real("Audio", "Volume_BGM", global.vol_bgm);
-                        ini_close();
-                        break;
+					    global.vol_bgm += 0.1;
+					    if (global.vol_bgm > 1.05) global.vol_bgm = 0;
+					    if (audio_is_playing(mus_menu)) {
+					        audio_sound_gain(mus_menu, global.vol_bgm, 0);
+					    }
+    
+					    ini_open("configuracoes.ini");
+					    ini_write_real("Audio", "Volume_BGM", global.vol_bgm);
+					    ini_close();
+					    break;
                     case 2:
-                        global.vol_sfx += 0.1;
-                        if (global.vol_sfx > 1.05) global.vol_sfx = 0;
-                        audio_sound_gain(snd_beep, global.vol_sfx, 0);
-                        ini_open("configuracoes.ini");
-                        ini_write_real("Audio", "Volume_SFX", global.vol_sfx);
-                        ini_close();
-                        break;
+					    global.vol_sfx += 0.1;
+					    if (global.vol_sfx > 1.05) global.vol_sfx = 0;
+    
+					    ini_open("configuracoes.ini");
+					    ini_write_real("Audio", "Volume_SFX", global.vol_sfx);
+					    ini_close();
+					    break;
                     case 3:
                         global.achievements = !global.achievements;
                         ini_open("configuracoes.ini");
@@ -179,7 +185,8 @@ else if (current_state == MENU_STATE.CREDITS) {
             if (!is_fading && mx >= x1 && mx <= x2 && my >= y1 && my <= y2) {
                 draw_set_color(c_aqua);
                 if (mouse_check_button_pressed(mb_left)) {
-                    audio_play_sound(snd_beep, 1, false);
+                    var sfx = audio_play_sound(snd_beep, 1, false);
+					audio_sound_gain(sfx, global.vol_sfx, 0);
                     fade_target_state = MENU_STATE.MAIN;
                     fade_target_bg = sprMenu;
                     is_fading = true;

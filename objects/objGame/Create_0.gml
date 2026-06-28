@@ -1,4 +1,3 @@
-// Estados do Menu Principal
 enum MENU_STATE_2 {
     MAIN,
     SETTINGS,
@@ -15,7 +14,6 @@ fade_target_room = -1;
 is_fading = false;
 fade_speed = 0.05; 
 
-// Sistema de História, Texto e Transições
 text_state = 0; 
 text_timer = 0;
 text_duration = 300;
@@ -23,14 +21,12 @@ text_fade_speed = 0.02;
 text_alpha = 0;
 current_text_index = 0;
 
-// SISTEMA DE INTERAÇÃO E RESPOSTAS DO JOGO
 choice_index = 0;
 global.history_answers = array_create(7, -1); 
 
 var user_name = environment_get_variable("USERNAME");
 if (user_name == "") user_name = "player";
 
-// Array base da história. Os espaços vazios ("") serão preenchidos em tempo real no Step com base na sua escolha!
 history_texts = [
     "Today was an absolute nightmare.",
     "I just wanted to get back to my room in one piece.",
@@ -98,16 +94,13 @@ game_replies = [
     ["Like clockwork without a soul.", "Breaking the cycle takes everything.", "Live fully, while you still can."]
 ];
 
-// Variáveis de Progresso e Sub-Menu de Saves
 current_chapter = 1; 
 save_menu_open = false;
 save_index = 0;
 save_slots = ["SLOT 1", "SLOT 2", "SLOT 3"];
 
-// CHECAGEM DE ANTECEDÊNCIA
 has_any_save = (file_exists("save_0.dat") || file_exists("save_1.dat") || file_exists("save_2.dat") || file_exists("save.dat"));
 
-// Variáveis para Feedback de Erro e Despedaçamento de Botões
 shake_continue = 0;
 shake_load = 0;
 error_flash_continue = 0;
