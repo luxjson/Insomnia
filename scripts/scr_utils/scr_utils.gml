@@ -18,3 +18,14 @@ function url_encode(_str) {
     }
     return _out;
 }
+
+
+function scr_show_location(_text, _color, _shadow, _chapter) {
+    var inst = instance_create_depth(0, 0, -10000, objShowLocal);
+    with (inst) {
+        text = _text;
+        color = _color;
+        shadow = _shadow;
+        show_chapter = _chapter;
+    }
+}

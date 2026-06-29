@@ -1,0 +1,11 @@
+text = "UNKNOWN";
+color = c_white;
+shadow = true;
+show_chapter = false;
+alpha = 0;
+draw_alpha = 0;
+progress = 0;
+speed = 0.04;
+state = 0;
+timer = 0;
+target_room = -1;

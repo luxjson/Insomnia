@@ -4,7 +4,7 @@ menu_fade = 1;
 progresso = 0;
 tempo_carregamento = game_get_speed(gamespeed_fps) * 3;
 window_set_cursor(cr_none);
-cursor_sprite = spr_cursor;
+cursor_sprite = sprCursorSelect;
 
 if (!variable_global_exists("ja_viu_a_splash")) {
     global.ja_viu_a_splash = false;

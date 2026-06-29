@@ -1,6 +1,7 @@
 global.fonteNormal = fontNormal;
 global.fonteMenu = fontMenu;
 global.fonteTitulo = fontTitulo;
+global.fonteTitulo2 = fontTitulo2
 global.fonteLegenda = fontLegenda;
 
 global.fonteNM = fontNormal;

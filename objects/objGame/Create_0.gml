@@ -1,30 +1,17 @@
-enum MENU_STATE_2 {
-    MAIN,
-    SETTINGS,
-    CREDITS
-}
+enum MENU_STATE_2 { MAIN, SETTINGS, CREDITS }
+
 current_state = MENU_STATE_2.MAIN;
-
-current_bg = -1;
-fade_target_bg = -1;
-
 menu_alpha = 1.0;
-fade_target_state = MENU_STATE_2.MAIN;
-fade_target_room = -1;
-is_fading = false;
-fade_speed = 0.05; 
-
-text_state = 0; 
+text_state = 0;
 text_timer = 0;
 text_duration = 300;
 text_fade_speed = 0.02;
 text_alpha = 0;
 current_text_index = 0;
-
 choice_index = 0;
-global.history_answers = array_create(7, -1); 
+global.history_answers = array_create(7, -1);
 
-var user_name = environment_get_variable("USERNAME");
+var user_name = string_upper(environment_get_variable("USERNAME"));
 if (user_name == "") user_name = "player";
 
 history_texts = [
@@ -39,39 +26,24 @@ history_texts = [
     "And honestly? A quiet part of me didn't care if it hit me.",
     "Now I am back in the dark of my room, and the numbness is taking over again.",
     "It's not a tiredness that sleep can fix. It's an exhaustion inside my bones.",
-    "Tell me...", // Índice 11
-    
-    // Pergunta 1 (Índice 12) -> Resposta entra no Índice 13
+    "Tell me...",
     "Have you ever felt a weight like this? A weight that makes breathing feel like a chore?",
-    "", 
-    
-    // Pergunta 2 (Índice 14) -> Resposta entra no Índice 15
+    "",
     "Do you ever look at a crowd of people and feel completely, entirely alone?",
-    "", 
-    
-    // Pergunta 3 (Índice 16) -> Resposta entra no Índice 17
+    "",
     "Have you ever stood frozen, watching danger approach, and felt absolutely no fear?",
-    "", 
-    
-    // Pergunta 4 (Índice 18) -> Resposta entra no Índice 19
+    "",
     "Does a part of you ever whisper that it would be easier if you just... stopped trying?",
-    "", 
-    
-    // Pergunta 5 (Índice 20) -> Resposta entra no Índice 21
+    "",
     "Do you know what it's like to look at your future and see nothing but blank space?",
-    "", 
-    
-    // Pergunta 6 (Índice 22) -> Resposta entra no Índice 23
+    "",
     "When you close your eyes, do you still remember what the light feels like?",
-    "", 
-    
-    // Pergunta 7 (Índice 24) -> Resposta entra no Índice 25
+    "",
     "Are you just going through the motions out of pure habit too?",
-    "", 
-    
-    "", // Índice 26 -> Conclusão baseada no seu perfil
-    "I understand, " + string(user_name) + ".", // Índice 27
-    "Tomorrow will be a better DAY." // Índice 28
+    "",
+    "",
+    "I understand, " + string(user_name) + ".",
+    "Tomorrow will be a better DAY."
 ];
 
 history_choices = [
@@ -94,12 +66,21 @@ game_replies = [
     ["Like clockwork without a soul.", "Breaking the cycle takes everything.", "Live fully, while you still can."]
 ];
 
-current_chapter = 1; 
-save_menu_open = false;
-save_index = 0;
-save_slots = ["SLOT 1", "SLOT 2", "SLOT 3"];
+current_chapter = 1;
+show_menu_buttons = false;
+menu_index = 0;
+config_open = false;
+config_y = -400;
+config_target_y = -400;
+config_anim_speed = 0.15;
+config_tab = 0;
+config_idx = 0;
+config_cooldown = 0;
+is_rebinding = false;
+keyboard_lastkey = -1;
 
-has_any_save = (file_exists("save_0.dat") || file_exists("save_1.dat") || file_exists("save_2.dat") || file_exists("save.dat"));
+save_menu_open = false;
+has_any_save = file_exists("save.json");
 
 shake_continue = 0;
 shake_load = 0;
@@ -109,25 +90,24 @@ click_count_continue = 0;
 click_count_load = 0;
 shattered_continue = false;
 shattered_load = false;
-
 shatter_particles = [];
 
-if (!variable_global_exists("vol_bgm"))     global.vol_bgm = 1.0;
-if (!variable_global_exists("vol_sfx"))     global.vol_sfx = 1.0;
-if (!variable_global_exists("fullscreen"))  global.fullscreen = window_get_fullscreen();
+if (!variable_global_exists("vol_bgm")) global.vol_bgm = 1.0;
+if (!variable_global_exists("vol_sfx")) global.vol_sfx = 1.0;
+if (!variable_global_exists("fullscreen")) global.fullscreen = window_get_fullscreen();
 if (!variable_global_exists("achievements")) global.achievements = true;
 if (!variable_global_exists("contrast_value")) global.contrast_value = 1.0;
 
 resolutions = [[1280, 720], [1600, 900], [1920, 1080]];
 
 ini_open("configuracoes.ini");
-global.fullscreen     = ini_read_real("Video", "Fullscreen", global.fullscreen);
-global.vol_bgm        = ini_read_real("Audio", "Volume_BGM", global.vol_bgm);
-global.vol_sfx        = ini_read_real("Audio", "Volume_SFX", global.vol_sfx);
-global.achievements   = ini_read_real("Gameplay", "Achievements", global.achievements);
+global.fullscreen = ini_read_real("Video", "Fullscreen", global.fullscreen);
+global.vol_bgm = ini_read_real("Audio", "Volume_BGM", global.vol_bgm);
+global.vol_sfx = ini_read_real("Audio", "Volume_SFX", global.vol_sfx);
+global.achievements = ini_read_real("Gameplay", "Achievements", global.achievements);
 global.contrast_value = ini_read_real("Video", "Contrast", global.contrast_value);
-resolution_index      = ini_read_real("Video", "ResolutionIndex", 0);
-text_scale            = ini_read_real("Interface", "TextScale", 1.0);
+resolution_index = ini_read_real("Video", "ResolutionIndex", 0);
+text_scale = ini_read_real("Interface", "TextScale", 1.0);
 
 controls = [
     ["MOVE LEFT",  ini_read_real("Controls", "Left",  vk_left)],
@@ -135,6 +115,7 @@ controls = [
     ["ACTION Z",   ini_read_real("Controls", "Z",     ord("Z"))],
     ["BACK X",     ini_read_real("Controls", "X",     ord("X"))]
 ];
+
 ini_close();
 
 window_set_fullscreen(global.fullscreen);
@@ -142,29 +123,16 @@ var res = resolutions[resolution_index];
 window_set_size(res[0], res[1]);
 display_set_gui_size(res[0], res[1]);
 
-main_options = ["NEW GAME", "CONTINUE FROM CHAPTER " + string(current_chapter), "LOAD SAVE", "SETTINGS"];
-settings_options = ["FULLSCREEN: ", "BGM VOLUME: ", "SFX VOLUME: ", "ACHIEVEMENTS: ", "BACK"];
+main_options = ["NEW GAME", "CONTINUE FROM CHAPTER " + string(current_chapter), "SETTINGS"];
 
-spacing = 45;
-show_menu_buttons = false;
-menu_index = 0;
-config_open = false;
-config_y = -400;
-config_target_y = -400;
-config_anim_speed = 0.15;
-config_tab = 0;
-config_idx = 0;
-is_rebinding = false;
-config_cooldown = 0;
-
-max_pixels = 40; 
+max_pixels = 40;
 pixel_list = array_create(max_pixels);
 for (var i = 0; i < max_pixels; i++) {
     pixel_list[i] = {
         xx: random(display_get_gui_width()),
         yy: random(display_get_gui_height()),
         spd: random_range(0.5, 1.5),
-        size: choose(1, 2)
+        size: choose(5, 6)
     };
 }
 
@@ -173,5 +141,5 @@ slice_count = 8;
 slice_max_width = 0;
 slice_widths = array_create(slice_count, 0);
 slice_speeds = array_create(slice_count, 0);
-for(var i = 0; i < slice_count; i++) slice_speeds[i] = random_range(15, 30);
+for (var i = 0; i < slice_count; i++) slice_speeds[i] = random_range(15, 30);
 transition_timer = 0;

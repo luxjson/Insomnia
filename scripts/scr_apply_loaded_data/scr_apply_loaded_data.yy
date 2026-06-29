@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_apply_loaded_data",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_apply_loaded_data",
+  "parent":{
+    "name":"scr",
+    "path":"folders/scr.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

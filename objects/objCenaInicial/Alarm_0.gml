@@ -1,0 +1,1 @@
+show_objective_text = true;

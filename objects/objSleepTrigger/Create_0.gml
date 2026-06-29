@@ -1,0 +1,9 @@
+sleeping = false;
+zoom_scale = 1.0;
+fade_alpha = 0.0;
+transition_complete = false;
+zoom_target = 0.25;
+zoom_speed = 0.025;
+fade_speed = 0.015;
+wait_frames = 15;
+wait_counter = 0;
