@@ -65,7 +65,7 @@ if (current_state == MENU_STATE.MAIN) {
     draw_set_font(global.fonteLegenda);
     draw_set_color(c_gray);
     draw_set_alpha(menu_alpha);
-    draw_text(base_x, gui_h - 20, "V0.10b");
+    draw_text(base_x, gui_h - 20, "V0.11b");
 }
 
 else if (current_state == MENU_STATE.SETTINGS) {
