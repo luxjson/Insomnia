@@ -10,7 +10,7 @@
    ### `INSOMNIA`
    
    ![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-green)
-   ![Version](https://img.shields.io/badge/VERSION-001a-gold)
+   ![Version](https://img.shields.io/badge/VERSION-0.11b-gold)
    
    **INSOMNIA** In a world where the clock never moves, silence is your only companion.
    
