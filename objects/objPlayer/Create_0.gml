@@ -76,6 +76,8 @@ menu_sub_state = "main";
 key_z = false;
 box_selected_opt = 0;
 sub_menu_idx = 0;
+global.puzzle_active = false;
+global.puzzle_solved = false;
 
 base_atk = 10;
 base_def = 5;

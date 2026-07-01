@@ -19,10 +19,10 @@ if (game_state == MINIGAME_STATE.INTRO) {
             case 2: text_alpha -= text_fade_speed; if (text_alpha <= 0) { text_alpha = 0; current_text_index++; if (current_text_index >= array_length(dev_texts)) show_choice_menu = true; else text_state = 0; } break;
         }
     } else {
-        if (keyboard_check_pressed(vk_up)) { choice_index = 0; var s = audio_play_sound(snd_select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
-        if (keyboard_check_pressed(vk_down)) { choice_index = 1; var s = audio_play_sound(snd_select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
+        if (keyboard_check_pressed(vk_up)) { choice_index = 0; var s = audio_play_sound(Select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
+        if (keyboard_check_pressed(vk_down)) { choice_index = 1; var s = audio_play_sound(Select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
         if (keyboard_check_pressed(ord("Z")) && menu_input_delay == 0) {
-            var s = audio_play_sound(snd_beep, 1, false); audio_sound_gain(s, sfx_vol, 0);
+            var s = audio_play_sound(Beep, 1, false); audio_sound_gain(s, sfx_vol, 0);
             if (choice_index == 0) {
                 game_state = MINIGAME_STATE.PLAYING;
                 score_points = 0;
@@ -45,7 +45,7 @@ if (game_state == MINIGAME_STATE.PLAYING) {
     
     if (player_cooldown > 0) player_cooldown--;
     if (keyboard_check(ord("Z")) && player_cooldown == 0) {
-        var s = audio_play_sound(snd_beep, 1, false); audio_sound_gain(s, sfx_vol * 0.4, 0);
+        var s = audio_play_sound(Beep, 1, false); audio_sound_gain(s, sfx_vol * 0.4, 0);
         array_push(player_lasers, { xx: player_x, yy: player_y - 15, spd: 10 });
         player_cooldown = 10; 
     }
@@ -96,8 +96,8 @@ if (game_state == MINIGAME_STATE.PLAYING) {
 					    game_state = MINIGAME_STATE.VICTORY;
 					    menu_input_delay = 60;
 					    end_menu_index = 0;
-					    if (!audio_is_playing(snd_victory)) {
-					        var som_vic = audio_play_sound(snd_victory, 10, false);
+					    if (!audio_is_playing(Victory)) {
+					        var som_vic = audio_play_sound(Victory, 10, false);
 					        audio_sound_gain(som_vic, sfx_vol, 0); 
 					    }
 					}
@@ -121,11 +121,11 @@ if (game_state == MINIGAME_STATE.PLAYING) {
 }
 
 if (game_state == MINIGAME_STATE.GAMEOVER) {
-    if (keyboard_check_pressed(vk_up)) { end_menu_index = 0; var s = audio_play_sound(snd_select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
-    if (keyboard_check_pressed(vk_down)) { end_menu_index = 1; var s = audio_play_sound(snd_select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
+    if (keyboard_check_pressed(vk_up)) { end_menu_index = 0; var s = audio_play_sound(Select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
+    if (keyboard_check_pressed(vk_down)) { end_menu_index = 1; var s = audio_play_sound(Select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
 
     if (keyboard_check_pressed(ord("Z")) && menu_input_delay == 0) {
-        var s = audio_play_sound(snd_beep, 1, false); audio_sound_gain(s, sfx_vol, 0);
+        var s = audio_play_sound(Beep, 1, false); audio_sound_gain(s, sfx_vol, 0);
         if (end_menu_index == 0) { 
             score_points = 0; player_lives = 5; player_x = display_get_gui_width() / 2; player_last_x = player_x;
             player_lasers = []; enemies = []; enemy_lasers = [];
@@ -138,11 +138,11 @@ if (game_state == MINIGAME_STATE.GAMEOVER) {
 
 if (game_state == MINIGAME_STATE.VICTORY) {
     
-    if (keyboard_check_pressed(vk_up)) { end_menu_index = 0; var s = audio_play_sound(snd_select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
-    if (keyboard_check_pressed(vk_down)) { end_menu_index = 1; var s = audio_play_sound(snd_select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
+    if (keyboard_check_pressed(vk_up)) { end_menu_index = 0; var s = audio_play_sound(Select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
+    if (keyboard_check_pressed(vk_down)) { end_menu_index = 1; var s = audio_play_sound(Select, 1, false); audio_sound_gain(s, sfx_vol, 0); }
     
     if (keyboard_check_pressed(ord("Z")) && menu_input_delay == 0) {
-        var s = audio_play_sound(snd_beep, 1, false); audio_sound_gain(s, sfx_vol, 0);
+        var s = audio_play_sound(Beep, 1, false); audio_sound_gain(s, sfx_vol, 0);
         if (end_menu_index == 0) {
             var base_tweet = "I just scored " + string(score_points) + " points on the @SomiariGames development minigame! The light always finds a way.";
             var twitter_url = "https://twitter.com/intent/tweet?text=" + url_encode(base_tweet);

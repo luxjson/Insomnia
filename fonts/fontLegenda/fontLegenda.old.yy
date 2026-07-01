@@ -119,8 +119,8 @@
   "maintainGms1Font":false,
   "name":"fontLegenda",
   "parent":{
-    "name":"fnt",
-    "path":"folders/fnt.yy",
+    "name":"Fonts Import",
+    "path":"folders/Fonts Import.yy",
   },
   "pointRounding":0,
   "ranges":[

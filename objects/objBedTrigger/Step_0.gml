@@ -6,7 +6,7 @@ if (start_fade) {
         if (text_alpha < 1) {
             text_alpha += text_fade_speed;
         } else {
-            room_goto(rm_chapter1Initial);
+            room_goto(rm_MazeOfMemories);
         }
     }
 }

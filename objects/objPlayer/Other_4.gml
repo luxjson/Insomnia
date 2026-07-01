@@ -1,3 +1,17 @@
+if (variable_global_exists("player_data")) {
+    var _d = global.player_data;
+    hp_actual = _d.hp;
+    hp_max = _d.hp_max;
+    stat_atk = _d.atk;
+    stat_def = _d.def;
+    inventory = _d.inventory;
+    equipped_weapon = _d.equipped_weapon;
+    equipped_shield = _d.equipped_shield;
+    state = _d.state;
+    dir = _d.dir;
+    anim_frame = _d.anim_frame;
+}
+
 if (variable_global_exists("load_data") && global.load_data != undefined) {
     var _data = global.load_data;
     

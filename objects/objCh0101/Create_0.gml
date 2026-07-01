@@ -1,9 +1,17 @@
 global.current_chapter = 1;
 started_story = false;
 
-if (!audio_is_playing(mus_chapter1Maze)) {
-    var som_chapter1Maze = audio_play_sound(mus_chapter1Maze, 10, true);
-    audio_sound_gain(som_chapter1Maze, global.vol_bgm, 0);
+CreateInteract(1490, 318, "???", "HELLOOOO!!!!! Welcome to your mind, Abby!!!!", c_white, 50);
+CreateInteract(2650, 330, "???", "OOOMG, IT'S RELLY YOU ABBY!!!!!", c_white, 50);
+
+
+if (audio_is_playing(AbbyMind)) {
+    audio_stop_sound(AbbyMind)
+}
+
+if (!audio_is_playing(MazeOfMemories)) {
+    global.music_id = audio_play_sound(MazeOfMemories, 10, true);
+    audio_sound_gain(global.music_id, global.vol_bgm, 0);
 }
 
 if (variable_global_exists("load_data") && global.load_data != undefined) {

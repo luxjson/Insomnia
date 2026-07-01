@@ -17,7 +17,7 @@ if (char_index < string_length(msg_text)) {
         displayed_text = string_copy(msg_text, 1, char_index);
         
         if (string_char_at(msg_text, char_index) != " ") {
-            var sfx = audio_play_sound(snd_beep, 1, false);
+            var sfx = audio_play_sound(Beep, 1, false);
             if (variable_global_exists("vol_sfx")) audio_sound_gain(sfx, global.vol_sfx, 0);
         }
     }
@@ -30,7 +30,7 @@ if (char_index < string_length(msg_text)) {
     if (is_choice_mode) {
         if (key_left || key_right) {
             choice_selected = (choice_selected == 0) ? 1 : 0;
-            var sfx = audio_play_sound(snd_beep, 1, false);
+            var sfx = audio_play_sound(Beep, 1, false);
             if (variable_global_exists("vol_sfx")) audio_sound_gain(sfx, global.vol_sfx, 0);
         }
         if (key_z) {

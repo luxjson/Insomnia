@@ -1,0 +1,1 @@
+global.puzzle_active = false;

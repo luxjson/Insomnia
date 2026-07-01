@@ -55,44 +55,35 @@ function Interact(_title, _text, _color) {
     });
 }
 
-
-function scr_calculate_damage(_atk, _def) {
-    var _base = _atk;
-    var _reduction = _def * 0.2;
-    var _damage = max(1, ceil(_base - _reduction));
-    if (random(100) < 10) {
-        _damage = ceil(_damage * 1.5);
-        return { damage: _damage, critical: true };
+function StartPuzzle(_x, _y) {
+    if (global.puzzle_solved) return;
+    if (global.puzzle_active) return;
+    if (instance_exists(objMinigamePuzzle)) return;
+    global.puzzle_active = true;
+    with (instance_create_depth(0, 0, -10000, objMinigamePuzzle)) {
+        puzzle_x = _x;
+        puzzle_y = _y;
     }
-    return { damage: _damage, critical: false };
 }
 
-function scr_deal_damage(_target, _damage, _knockback_dir, _knockback_power) {
-    if (!instance_exists(_target)) return;
-    
-    _target.hp -= _damage;
-    _target.hit_timer = 10;
-    _target.flash_timer = 8;
-    
-    _target.knockback = true;
-    _target.knockback_dir = _knockback_dir;
-    _target.knockback_power = _knockback_power;
-    _target.knockback_timer = 8;
-    
-    with (instance_create_depth(_target.x, _target.y - 20, -100, objFloatingText)) {
-        text = "-" + string(_damage);
-        color = c_red;
-        duration = 40;
-    }
-    
-    if (_target.hp <= 0) {
-        _target.hp = 0;
-        with (instance_create_depth(_target.x, _target.y, -100, objFloatingText)) {
-            text = "VICTORY!";
-            color = c_yellow;
-            duration = 60;
-            scale = 1.5;
+function scr_set_objective(_text) {
+    global.current_objective = _text;
+}
+
+function close_portal() {
+    if (state == "idle" || state == "wakedown") {
+        if (instance_exists(objPlayer)) {
+            objPlayer.visible = true;
         }
-        instance_destroy(_target);
+        instance_destroy();
     }
+}
+
+function start_transition() {
+    if (transitioning) return;
+    transitioning = true;
+    with (instance_create_depth(0, 0, -10000, objTransition)) {
+        target_room = other.target_room;
+    }
+    instance_destroy();
 }

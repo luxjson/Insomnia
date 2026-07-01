@@ -68,7 +68,7 @@ if (current_text_index < array_length(history_texts)) {
         draw_set_valign(fa_bottom);
         draw_set_color(c_white);
         draw_set_alpha(alpha);
-        draw_text(gui_w / 2, gui_h - 20, "[X] to skip introduction");
+        draw_text(gui_w / 2, gui_h - 20, "[X] to skip");
         draw_set_alpha(1);
     }
 }
@@ -89,6 +89,11 @@ if (show_menu_buttons && !config_open && !is_transitioning) {
         var label = menu_index == i ? "[ " + main_options[i] + " ]" : main_options[i];
         draw_text_transformed(final_x, final_y, label, text_scale, text_scale, 0);
     }
+    draw_set_font(global.fonteLegenda);
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_bottom);
+    draw_set_color(c_gray);
+    draw_text(gui_w - 20, gui_h - 20, game_version);
 }
 if (config_y > -350) {
     var box_height = 340;
@@ -102,9 +107,9 @@ if (config_y > -350) {
     draw_line_width(gui_w - 50, config_y + 10, gui_w - 50, config_y + 10 + box_height, 4);
     draw_set_font(global.fonteNormal);
     draw_set_valign(fa_top);
-    var tabs = ["GRAPHICS", "CONTROLS", "SUPPORT"];
-    var t_w = (gui_w - 100) / 3;
-    for (var i = 0; i < 3; i++) {
+    var tabs = ["GRAPHICS", "AUDIO", "CONTROLS", "SUPPORT"];
+    var t_w = (gui_w - 100) / 4;
+    for (var i = 0; i < 4; i++) {
         draw_set_color(config_tab == i ? c_aqua : c_white);
         var tab_label = config_tab == i ? "[ " + tabs[i] + " ]" : tabs[i];
         draw_text(50 + (t_w * i) + (t_w / 2), config_y + 25, tab_label);
@@ -115,6 +120,13 @@ if (config_y > -350) {
         draw_set_color(config_idx == 0 ? c_aqua : c_white);
         draw_text(base_x, inner_y, "FULLSCREEN: " + (global.fullscreen ? "ON" : "OFF"));
     } else if (config_tab == 1) {
+        var opt_text = ["BGM VOLUME: " + string(round(global.vol_bgm * 100)) + "%", "SFX VOLUME: " + string(round(global.vol_sfx * 100)) + "%", "BACK"];
+        for (var i = 0; i < 3; i++) {
+            draw_set_halign(fa_center);
+            draw_set_color(config_idx == i ? c_aqua : c_white);
+            draw_text(base_x, inner_y + (i * 45), opt_text[i]);
+        }
+    } else if (config_tab == 2) {
         draw_set_halign(fa_center);
         draw_set_color(c_white);
         draw_text(base_x, inner_y, "MOVE: ARROW KEYS");
@@ -123,7 +135,7 @@ if (config_y > -350) {
         draw_text(base_x, inner_y + 120, "CANCEL / BACK: X");
         draw_set_color(make_color_rgb(80, 80, 80));
         draw_text(base_x, inner_y + 180, "[ PRESS X TO RETURN ]");
-    } else if (config_tab == 2) {
+    } else if (config_tab == 3) {
         draw_set_halign(fa_center);
         draw_set_color(c_white);
         draw_text(base_x, inner_y, "SUPPORT THE GAME");

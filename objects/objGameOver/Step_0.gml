@@ -25,11 +25,11 @@ if (!save_menu_open && !is_transitioning) {
         } else {
             menu_index = 1;
         }
-        audio_play_sound(snd_beep, 1, false);
+        audio_play_sound(Beep, 1, false);
     }
     
     if (keyboard_check_pressed(ord("Z"))) {
-        audio_play_sound(snd_beep, 1, false);
+        audio_play_sound(Beep, 1, false);
 
         switch (menu_index) {
             case 0:
@@ -92,7 +92,7 @@ if (is_transitioning) {
     if (fade_alpha >= 1) {
         transition_timer++;
         if (transition_timer >= 10) {
-            room_goto(rm_gameplay);
+            room_goto(rm_AbbyBedroom);
         }
     }
 }

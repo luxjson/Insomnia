@@ -1,0 +1,9 @@
+state = "wakeup";
+sprite_index = sprPortalWakeup;
+image_speed = 0.2;
+image_index = 0;
+trigger_distance = 50;
+show_prompt = false;
+interact_text = "Press Z to enter the portal";
+transitioning = false;
+target_room = rm_AbbyBedroom;

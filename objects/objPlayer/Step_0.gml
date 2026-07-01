@@ -5,6 +5,31 @@ if (instance_exists(objDialogue)) {
     exit; 
 }
 
+if (instance_exists(objSleepTrigger)) {
+	if (objSleepTrigger.sleeping) {
+	    hspd = 0;
+	    vspd = 0;
+	    state = "idle"; 
+	    exit; 
+	}
+}
+
+if (instance_exists(objCh0101)) {
+	if (!objCh0101.started_story) {
+	    hspd = 0;
+	    vspd = 0;
+	    state = "idle"; 
+	    exit; 
+	}
+}
+
+if (global.puzzle_active) {
+    hspd = 0;
+    vspd = 0;
+    state = "idle";
+    exit;
+}
+
 
 if (config_cooldown > 0) config_cooldown--;
 
@@ -40,7 +65,7 @@ if (!is_dead && hp_actual <= 0) {
 if (is_dead) {
     death_timer++;
     if (death_timer >= 60) {
-        room_goto(rm_gameover);
+        room_goto(rm_GameOver);
     }
 }
 
@@ -53,6 +78,11 @@ if (!config_open && config_target_y == -400) {
         if (key_shift && !is_dashing && _len > 0) {
             is_dashing = true;
             dash_timer = dash_dur;
+            if (!audio_is_playing(Dash)) {
+                var som_Dash = audio_play_sound(Dash, 10, false);
+                audio_sound_gain(som_Dash, global.vol_sfx, 0);
+            }
+
             dash_dir = dir;
             state = "dash";
             hspd = (_h_input / _len) * dash_spd;
@@ -81,7 +111,18 @@ if (!config_open && config_target_y == -400) {
             else if (hspd < 0) dir = 1;
             else if (vspd < 0) dir = 3;
             else if (hspd > 0) dir = 5;
-            if (hspd != 0 || vspd != 0) state = "walk"; else state = "idle";
+            if (hspd != 0 || vspd != 0) {
+                    state = "walk";
+                    if (!audio_is_playing(Walk)) {
+                        var som_Walk = audio_play_sound(Walk, 10, false);
+                        audio_sound_gain(som_Walk, global.vol_sfx*10, 0);
+                    }
+                } else {
+                    state = "idle";
+                    if (audio_is_playing(Walk)) {
+                        audio_stop_sound(Walk)
+                    }
+                }
         }
         
         if (place_meeting(x + hspd, y, obj)) {
@@ -100,11 +141,11 @@ if (!config_open && config_target_y == -400) {
         }
         y += vspd;
     }
-	
-	var half_w = sprite_width / 2;
-	var half_h = sprite_height / 2;
-	x = clamp(x, half_w, room_width - half_w);
-	y = clamp(y, half_h, room_height - half_h);
+    
+    var half_w = sprite_width / 2;
+    var half_h = sprite_height / 2;
+    x = clamp(x, half_w, room_width - half_w);
+    y = clamp(y, half_h, room_height - half_h);
     anim_frame += anim_speed;
 } else if (config_open && config_target_y == 0 && config_cooldown == 0) {
     if (menu_sub_state == "main") {
@@ -131,17 +172,33 @@ if (!config_open && config_target_y == -400) {
         if (sub_menu_idx == 0 && key_z) {
             play_beep = true;
             global.fullscreen = !global.fullscreen; window_set_fullscreen(global.fullscreen);
-            ini_open("configuracoes.ini"); ini_write_real("Video", "Fullscreen", global.fullscreen); ini_close();
+            ini_open("configuracoes.ini"); 
+            ini_write_real("Video", "Fullscreen", global.fullscreen);
+            ini_close();
         }
-        if (sub_menu_idx == 1) {
-            if (keyboard_check(vk_right)) { global.vol_bgm = min(1.0, global.vol_bgm + 0.01); }
-            if (keyboard_check(vk_left))  { global.vol_bgm = max(0.0, global.vol_bgm - 0.01); }
+        if (sub_menu_idx == 1 && key_z) {
+            global.vol_bgm += 0.1;
+            if (global.vol_bgm > 1.05) global.vol_bgm = 0;
+            if (variable_global_exists("music_id")) {
+                audio_sound_gain(global.music_id, global.vol_bgm, 0);
+            }
+            ini_open("configuracoes.ini");
+            ini_write_real("Audio", "Volume_BGM", global.vol_bgm);
+            ini_close();
+            play_beep = true;
         }
-        if (sub_menu_idx == 2) {
-            if (keyboard_check(vk_right)) { global.vol_sfx = min(1.0, global.vol_sfx + 0.01); }
-            if (keyboard_check(vk_left))  { global.vol_sfx = max(0.0, global.vol_sfx - 0.01); }
+        if (sub_menu_idx == 2 && key_z) {
+            global.vol_sfx += 0.1;
+            if (global.vol_sfx > 1.05) global.vol_sfx = 0;
+            ini_open("configuracoes.ini");
+            ini_write_real("Audio", "Volume_SFX", global.vol_sfx);
+            ini_close();
+            play_beep = true;
         }
-        if ((sub_menu_idx == 3 && key_z) || key_x) { menu_sub_state = "main"; play_beep = true; }
+        if ((sub_menu_idx == 3 && key_z) || key_x) {
+            menu_sub_state = "main";
+            play_beep = true;
+        }
     } else if (menu_sub_state == "submenu_controls") {
         if (key_z || key_x) { menu_sub_state = "main"; play_beep = true; }
     } else if (menu_sub_state == "submenu_game") {
@@ -218,7 +275,7 @@ if (!config_open && config_target_y == -400) {
 }
 
 if (play_beep) {
-    var sfx = audio_play_sound(snd_beep, 1, false);
+    var sfx = audio_play_sound(Beep, 1, false);
     audio_sound_gain(sfx, global.vol_sfx, 0);
 }
 
@@ -229,19 +286,4 @@ for (var i = array_length(shatter_particles) - 1; i >= 0; i--) {
     p.vy += 0.2; 
     p.alpha -= 0.02;
     if (p.alpha <= 0) array_delete(shatter_particles, i, 1);
-}
-
-if (keyboard_check_pressed(ord("X"))) {
-    var _dir = point_direction(x, y, mouse_x, mouse_y);
-    var _range = 50;
-    var _knockback_power = 8;
-    
-    var _hit = false;
-    with (objEnemy) {
-        if (point_distance(other.x, other.y, x, y) < _range) {
-            var _dmg = scr_calculate_damage(other.stat_atk, def);
-            scr_deal_damage(id, _dmg.damage, _dir, _knockback_power);
-            _hit = true;
-        }
-    }
 }

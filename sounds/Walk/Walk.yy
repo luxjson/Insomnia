@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"Walk",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":3.9183674,
+  "exportDir":"",
+  "name":"Walk",
+  "parent":{
+    "name":"Effect",
+    "path":"folders/Sounds and Musics/Effect.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"Walk.mp3",
+  "volume":1.0,
+}

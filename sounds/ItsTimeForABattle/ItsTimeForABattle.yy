@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"ItsTimeForABattle",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":31.968004,
+  "exportDir":"",
+  "name":"ItsTimeForABattle",
+  "parent":{
+    "name":"Track",
+    "path":"folders/Sounds and Musics/Track.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"ItsTimeForABattle.mp3",
+  "volume":0.75,
+}

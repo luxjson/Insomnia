@@ -1,3 +1,4 @@
+if (game_starting) exit;
 if (config_cooldown > 0) config_cooldown--;
 var key_z = keyboard_check_pressed(ord("Z"));
 var key_x = keyboard_check_pressed(ord("X"));
@@ -91,8 +92,10 @@ if (!config_open && !save_menu_open && !is_transitioning) {
         if (key_z) {
             switch (menu_index) {
                 case 0:
-                    is_transitioning = true;
-                    slice_max_width = display_get_gui_width() + 100;
+                    if (!instance_exists(objIntroSequence)) {
+                        game_starting = true;
+                        with (instance_create_depth(0, 0, -10000, objIntroSequence)) {}
+                    }
                     play_beep = true;
                     break;
                 case 1:
@@ -126,13 +129,14 @@ if (config_open) {
         play_beep = true;
     }
     if (config_open && config_target_y == 0 && config_cooldown == 0) {
-        if (keyboard_check_pressed(vk_left)) { config_tab--; if (config_tab < 0) config_tab = 2; config_idx = 0; play_beep = true; }
-        if (keyboard_check_pressed(vk_right)) { config_tab++; if (config_tab > 2) config_tab = 0; config_idx = 0; play_beep = true; }
+        if (keyboard_check_pressed(vk_left)) { config_tab--; if (config_tab < 0) config_tab = 3; config_idx = 0; play_beep = true; }
+        if (keyboard_check_pressed(vk_right)) { config_tab++; if (config_tab > 3) config_tab = 0; config_idx = 0; play_beep = true; }
         var max_idx;
         switch (config_tab) {
             case 0: max_idx = 0; break;
-            case 1: max_idx = array_length(controls) - 1; break;
-            case 2: max_idx = 0; break;
+            case 1: max_idx = 2; break;
+            case 2: max_idx = array_length(controls) - 1; break;
+            case 3: max_idx = 0; break;
         }
         if (keyboard_check_pressed(vk_up)) { config_idx--; if (config_idx < 0) config_idx = max_idx; play_beep = true; }
         if (keyboard_check_pressed(vk_down)) { config_idx++; if (config_idx > max_idx) config_idx = 0; play_beep = true; }
@@ -147,8 +151,35 @@ if (config_open) {
             }
         }
         if (config_tab == 1) {
+            if (key_z) {
+                if (config_idx == 0) {
+                    global.vol_bgm += 0.1;
+                    if (global.vol_bgm > 1.05) global.vol_bgm = 0;
+                    if (variable_global_exists("music_id")) {
+                        audio_sound_gain(global.music_id, global.vol_bgm, 0);
+                    }
+                    ini_open("configuracoes.ini");
+                    ini_write_real("Audio", "Volume_BGM", global.vol_bgm);
+                    ini_close();
+                    play_beep = true;
+                }
+                if (config_idx == 1) {
+                    global.vol_sfx += 0.1;
+                    if (global.vol_sfx > 1.05) global.vol_sfx = 0;
+                    ini_open("configuracoes.ini");
+                    ini_write_real("Audio", "Volume_SFX", global.vol_sfx);
+                    ini_close();
+                    play_beep = true;
+                }
+                if (config_idx == 2) {
+                    config_target_y = -400;
+                    play_beep = true;
+                }
+            }
         }
         if (config_tab == 2) {
+        }
+        if (config_tab == 3) {
             if (config_idx == 0 && key_z) {
                 url_open("https://somiari.itch.io/insomnia");
                 play_beep = true;
@@ -199,11 +230,11 @@ if (is_transitioning) {
     }
     if (all_slices_full) {
         transition_timer++;
-        if (transition_timer == 1) room_goto(rm_gameplay);
+        if (transition_timer == 1) room_goto(rm_AbbyBedroom);
         if (transition_timer >= 30) instance_destroy();
     }
 }
 if (play_beep) {
-    var sfx = audio_play_sound(snd_beep, 1, false);
+    var sfx = audio_play_sound(Beep, 1, false);
     audio_sound_gain(sfx, global.vol_sfx, 0);
 }

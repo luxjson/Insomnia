@@ -1,0 +1,11 @@
+timer = 0;
+state = 0;
+alpha = 0;
+particles = [];
+show_text = false;
+text_alpha = 0;
+version_alpha = 0;
+credits_alpha = 0;
+firework_particles = [];
+explosion_particles = [];
+game_version = "v0.11b";
