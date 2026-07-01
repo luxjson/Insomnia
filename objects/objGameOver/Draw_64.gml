@@ -4,7 +4,6 @@ draw_clear(c_black);
 var gui_w = display_get_gui_width();
 var gui_h = display_get_gui_height();
 var base_x = gui_w / 2;
-
 for (var i = 0; i < array_length(shatter_particles); i++) {
     var p = shatter_particles[i];
     draw_set_color(p.color);
@@ -28,7 +27,6 @@ draw_text_ext_transformed(base_x, gui_h / 2 - 40, hope_text, 24, gui_w - 300, te
 draw_set_alpha(text_alpha);
 
 var menu_y_start = gui_h / 2 + 60;
-
 for (var i = 0; i < array_length(main_options); i++) {
     var x_pos = base_x;
     var y_pos = menu_y_start + (i * 50);
@@ -84,13 +82,4 @@ if (is_transitioning) {
     draw_set_alpha(1);
 }
 
-for (var i = 0; i < array_length(shatter_particles); i++) {
-    var p = shatter_particles[i];
-    if (p.alpha < 1) { 
-        draw_set_color(p.color);
-        draw_set_alpha(p.alpha);
-        draw_rectangle(p.xx, p.yy, p.xx + p.size, p.yy + p.size, false);
-    }
-}
-draw_set_alpha(1);
 draw_set_color(c_white);

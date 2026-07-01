@@ -25,13 +25,11 @@ if (!save_menu_open && !is_transitioning) {
         } else {
             menu_index = 1;
         }
-        var sfx = audio_play_sound(snd_beep, 1, false);
-        if (variable_global_exists("vol_sfx")) audio_sound_gain(sfx, global.vol_sfx, 0);
+        audio_play_sound(snd_beep, 1, false);
     }
     
     if (keyboard_check_pressed(ord("Z"))) {
-        var sfx = audio_play_sound(snd_beep, 1, false);
-        if (variable_global_exists("vol_sfx")) audio_sound_gain(sfx, global.vol_sfx, 0);
+        audio_play_sound(snd_beep, 1, false);
 
         switch (menu_index) {
             case 0:
@@ -40,13 +38,13 @@ if (!save_menu_open && !is_transitioning) {
                         save_menu_open = true;
                         save_index = 0;
                     } else {
-                  
                         shattered_try = true;
                         menu_index = 1;
                         shake_try = 40;
+                        
+                        var gui_w = display_get_gui_width();
+                        var gui_h = display_get_gui_height();
                         for (var i = 0; i < 30; i++) {
-                            var gui_w = display_get_gui_width();
-                            var gui_h = display_get_gui_height();
                             array_push(shatter_particles, {
                                 xx: gui_w / 2 + random_range(-80, 80),
                                 yy: (gui_h / 2 + 60) + random_range(-10, 10),
@@ -76,9 +74,8 @@ if (save_menu_open) {
     if (keyboard_check_pressed(ord("X"))) { save_menu_open = false; }
     
     if (keyboard_check_pressed(ord("Z"))) {
-        var file_name = "save_" + string(save_index) + ".json";
-        if (file_exists(file_name)) {
-            scr_load_game(file_name);
+        if (file_exists("save.json")) {
+            scr_load_game("save.json");
             save_menu_open = false;
         } else {
             save_menu_open = false;

@@ -230,3 +230,18 @@ for (var i = array_length(shatter_particles) - 1; i >= 0; i--) {
     p.alpha -= 0.02;
     if (p.alpha <= 0) array_delete(shatter_particles, i, 1);
 }
+
+if (keyboard_check_pressed(ord("X"))) {
+    var _dir = point_direction(x, y, mouse_x, mouse_y);
+    var _range = 50;
+    var _knockback_power = 8;
+    
+    var _hit = false;
+    with (objEnemy) {
+        if (point_distance(other.x, other.y, x, y) < _range) {
+            var _dmg = scr_calculate_damage(other.stat_atk, def);
+            scr_deal_damage(id, _dmg.damage, _dir, _knockback_power);
+            _hit = true;
+        }
+    }
+}
