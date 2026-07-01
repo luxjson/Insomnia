@@ -1,9 +1,11 @@
 sleeping = false;
-zoom_scale = 1.0;
-fade_alpha = 0.0;
 transition_complete = false;
-zoom_target = 0.25;
-zoom_speed = 0.025;
-fade_speed = 0.015;
-wait_frames = 15;
-wait_counter = 0;
+curtain_progress = 0;
+curtain_speed = 0.015;
+
+interact_title = "BED";
+interact_text = "Finally, I can sleep.";
+interact_color = c_white;
+trigger_distance = 50;
+show_prompt = false;
+pending_sleep = false;

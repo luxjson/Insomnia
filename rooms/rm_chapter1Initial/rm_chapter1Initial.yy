@@ -1187,7 +1187,7 @@
   "name":"rm_chapter1Initial",
   "parent":{
     "name":"Chapter01",
-    "path":"folders/rooms/Chapter01.yy",
+    "path":"folders/Rooms/Chapter01.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

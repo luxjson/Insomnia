@@ -9,8 +9,8 @@
   "name":"objCam",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Camera",
+    "path":"folders/Objects/Global/Camera.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -1,11 +1,11 @@
 text = "UNKNOWN";
 color = c_white;
 shadow = true;
-show_chapter = false;
+chapter_number = -1;
+
 alpha = 0;
-draw_alpha = 0;
-progress = 0;
-speed = 0.04;
+slide_offset = -300;
 state = 0;
-timer = 0;
-target_room = -1;
+speed = 0.04;
+hold_timer = 0;
+hold_time = 120;

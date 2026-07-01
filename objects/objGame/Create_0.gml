@@ -1,5 +1,4 @@
 enum MENU_STATE_2 { MAIN, SETTINGS, CREDITS }
-
 current_state = MENU_STATE_2.MAIN;
 menu_alpha = 1.0;
 text_state = 0;
@@ -10,10 +9,8 @@ text_alpha = 0;
 current_text_index = 0;
 choice_index = 0;
 global.history_answers = array_create(7, -1);
-
 var user_name = string_upper(environment_get_variable("USERNAME"));
 if (user_name == "") user_name = "player";
-
 history_texts = [
     "Today was an absolute nightmare.",
     "I just wanted to get back to my room in one piece.",
@@ -45,7 +42,6 @@ history_texts = [
     "I understand, " + string(user_name) + ".",
     "Tomorrow will be a better DAY."
 ];
-
 history_choices = [
     ["Yes, every day.", "Only sometimes.", "No, not really."],
     ["Always.", "When it gets dark.", "Never."],
@@ -55,7 +51,6 @@ history_choices = [
     ["I forgot it.", "It is fading.", "Yes, clearly."],
     ["Yes, like a machine.", "I am trying not to.", "No, I am living."]
 ];
-
 game_replies = [
     ["A suffocating armor... I know.", "Be careful, those moments can expand.", "I'm glad your body still feels light."],
     ["The worst kind of isolation is around others.", "The shadows have a way of doing that.", "Keep holding onto that connection."],
@@ -65,7 +60,6 @@ game_replies = [
     ["The darkness is a cruel thief.", "Then try to remember before it slips away.", "Never forget how warm it feels."],
     ["Like clockwork without a soul.", "Breaking the cycle takes everything.", "Live fully, while you still can."]
 ];
-
 current_chapter = 1;
 show_menu_buttons = false;
 menu_index = 0;
@@ -76,54 +70,51 @@ config_anim_speed = 0.15;
 config_tab = 0;
 config_idx = 0;
 config_cooldown = 0;
-is_rebinding = false;
-keyboard_lastkey = -1;
-
 save_menu_open = false;
+menu_sub_state = "main";
 has_any_save = file_exists("save.json");
-
-shake_continue = 0;
 shake_load = 0;
-error_flash_continue = 0;
 error_flash_load = 0;
-click_count_continue = 0;
-click_count_load = 0;
-shattered_continue = false;
-shattered_load = false;
 shatter_particles = [];
-
 if (!variable_global_exists("vol_bgm")) global.vol_bgm = 1.0;
 if (!variable_global_exists("vol_sfx")) global.vol_sfx = 1.0;
 if (!variable_global_exists("fullscreen")) global.fullscreen = window_get_fullscreen();
 if (!variable_global_exists("achievements")) global.achievements = true;
 if (!variable_global_exists("contrast_value")) global.contrast_value = 1.0;
-
 resolutions = [[1280, 720], [1600, 900], [1920, 1080]];
-
-ini_open("configuracoes.ini");
-global.fullscreen = ini_read_real("Video", "Fullscreen", global.fullscreen);
-global.vol_bgm = ini_read_real("Audio", "Volume_BGM", global.vol_bgm);
-global.vol_sfx = ini_read_real("Audio", "Volume_SFX", global.vol_sfx);
-global.achievements = ini_read_real("Gameplay", "Achievements", global.achievements);
-global.contrast_value = ini_read_real("Video", "Contrast", global.contrast_value);
-resolution_index = ini_read_real("Video", "ResolutionIndex", 0);
-text_scale = ini_read_real("Interface", "TextScale", 1.0);
-
 controls = [
-    ["MOVE LEFT",  ini_read_real("Controls", "Left",  vk_left)],
-    ["MOVE RIGHT", ini_read_real("Controls", "Right", vk_right)],
-    ["ACTION Z",   ini_read_real("Controls", "Z",     ord("Z"))],
-    ["BACK X",     ini_read_real("Controls", "X",     ord("X"))]
+    ["MOVE LEFT",  vk_left],
+    ["MOVE RIGHT", vk_right],
+    ["ACTION Z",   ord("Z")],
+    ["BACK X",     ord("X")],
+    ["DASH",       vk_shift],
+    ["MOVE UP",    vk_up],
+    ["MOVE DOWN",  vk_down]
 ];
-
-ini_close();
-
+if (file_exists("configuracoes.ini")) {
+    ini_open("configuracoes.ini");
+    global.fullscreen = ini_read_real("Video", "Fullscreen", global.fullscreen);
+    global.vol_bgm = ini_read_real("Audio", "Volume_BGM", global.vol_bgm);
+    global.vol_sfx = ini_read_real("Audio", "Volume_SFX", global.vol_sfx);
+    global.achievements = ini_read_real("Gameplay", "Achievements", global.achievements);
+    global.contrast_value = ini_read_real("Video", "Contrast", global.contrast_value);
+    resolution_index = ini_read_real("Video", "ResolutionIndex", 0);
+    text_scale = ini_read_real("Interface", "TextScale", 1.0);
+    ini_close();
+} else {
+    resolution_index = 0;
+    text_scale = 1.0;
+}
+global.control_list = controls;
 window_set_fullscreen(global.fullscreen);
 var res = resolutions[resolution_index];
 window_set_size(res[0], res[1]);
 display_set_gui_size(res[0], res[1]);
 
-main_options = ["NEW GAME", "CONTINUE FROM CHAPTER " + string(current_chapter), "SETTINGS"];
+function build_main_options() {
+    main_options = ["NEW GAME", "LOAD SAVE", "SETTINGS"];
+}
+build_main_options();
 
 max_pixels = 40;
 pixel_list = array_create(max_pixels);
@@ -135,7 +126,6 @@ for (var i = 0; i < max_pixels; i++) {
         size: choose(5, 6)
     };
 }
-
 is_transitioning = false;
 slice_count = 8;
 slice_max_width = 0;
@@ -143,3 +133,4 @@ slice_widths = array_create(slice_count, 0);
 slice_speeds = array_create(slice_count, 0);
 for (var i = 0; i < slice_count; i++) slice_speeds[i] = random_range(15, 30);
 transition_timer = 0;
+show_skip_prompt = false;

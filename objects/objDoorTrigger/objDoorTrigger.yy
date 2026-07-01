@@ -12,8 +12,8 @@
   "name":"objDoorTrigger",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Maze Of Memories",
+    "path":"folders/Objects/Chapter01/Maze Of Memories.yy",
   },
   "parentObjectId":null,
   "persistent":false,

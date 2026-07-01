@@ -12,8 +12,8 @@
   "name":"objSleepTrigger",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Abby's Bedroom",
+    "path":"folders/Objects/Chapter01/Abby's Bedroom.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -33,10 +33,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"sprInfo",
-    "path":"sprites/sprInfo/sprInfo.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

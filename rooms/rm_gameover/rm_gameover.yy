@@ -20,7 +20,7 @@
   "name":"rm_gameover",
   "parent":{
     "name":"Menu",
-    "path":"folders/rooms/Menu.yy",
+    "path":"folders/Rooms/Menu.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

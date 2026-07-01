@@ -14,8 +14,8 @@
   "exportDir":"",
   "name":"mus_menu",
   "parent":{
-    "name":"snd",
-    "path":"folders/snd.yy",
+    "name":"Sounds and Musics",
+    "path":"folders/Sounds and Musics.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

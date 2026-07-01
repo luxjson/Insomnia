@@ -20,12 +20,38 @@ function url_encode(_str) {
 }
 
 
-function scr_show_location(_text, _color, _shadow, _chapter) {
+function scr_show_location(_text, _color, _shadow, _chapter_number) {
+    if (instance_exists(objShowLocal)) {
+        with (objShowLocal) instance_destroy();
+    }
     var inst = instance_create_depth(0, 0, -10000, objShowLocal);
     with (inst) {
         text = _text;
         color = _color;
         shadow = _shadow;
-        show_chapter = _chapter;
+        chapter_number = _chapter_number;
     }
 }
+
+function CreateInteract(_x, _y, _title, _text, _color, _dist) {
+    show_debug_message("CreateInteract chamado! X:" + string(_x) + " Y:" + string(_y));
+    with (instance_create_layer(_x, _y, "Instances", objInteract)) {
+        interact_title = _title;
+        interact_text = _text;
+        interact_color = _color;
+        trigger_distance = _dist;
+    }
+}
+
+function Interact(_title, _text, _color) {
+    if (!instance_exists(objInteractSystem)) {
+        instance_create_depth(0, 0, -1000, objInteractSystem);
+    }
+    if (!variable_global_exists("interact_queue")) global.interact_queue = [];
+    array_push(global.interact_queue, {
+        title: _title,
+        text: _text,
+        color: _color
+    });
+}
+

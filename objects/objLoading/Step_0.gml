@@ -1,14 +1,14 @@
-if (fade_state == 0) {
-    if (load_progress < 100) {
-        load_progress += load_speed;
-    } else {
-        load_progress = 100;
-        is_done = true;
-        fade_state = 1;
-    }
-} else if (fade_state == 1) {
-    fade_alpha += 0.02;
-    if (fade_alpha >= 1) {
+if (state == 0) {
+    alpha += speed;
+    if (alpha >= 1) {
+        alpha = 1;
+        state = 1;
         room_goto(target_room);
+    }
+} else if (state == 1) {
+    alpha -= speed;
+    if (alpha <= 0) {
+        alpha = 0;
+        instance_destroy();
     }
 }

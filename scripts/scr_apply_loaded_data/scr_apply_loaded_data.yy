@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_apply_loaded_data",
   "parent":{
-    "name":"scr",
-    "path":"folders/scr.yy",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

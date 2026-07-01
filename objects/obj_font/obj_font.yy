@@ -8,8 +8,8 @@
   "name":"obj_font",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Fonts",
+    "path":"folders/Objects/Global/Fonts.yy",
   },
   "parentObjectId":null,
   "persistent":false,

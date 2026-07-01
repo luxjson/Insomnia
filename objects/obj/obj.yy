@@ -8,8 +8,8 @@
   "name":"obj",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Colisions",
+    "path":"folders/Objects/Global/Colisions.yy",
   },
   "parentObjectId":null,
   "persistent":false,

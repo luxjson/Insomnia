@@ -1,10 +1,8 @@
 gpu_set_texfilter(false);
 draw_clear(c_black);
-
 var gui_w = display_get_gui_width();
 var gui_h = display_get_gui_height();
 var base_x = gui_w / 2;
-
 draw_set_color(c_aqua);
 draw_set_alpha(0.4);
 for (var i = 0; i < max_pixels; i++) {
@@ -15,17 +13,14 @@ for (var i = 0; i < max_pixels; i++) {
 }
 draw_set_alpha(1.0);
 draw_set_color(c_white);
-
 if (current_text_index < array_length(history_texts)) {
     draw_set_font(global.fonteNormal);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
     if (show_menu_buttons && !config_open) draw_set_alpha(1.0);
     else draw_set_alpha(text_alpha);
-
     var is_question = (current_text_index >= 12 && current_text_index <= 24 && current_text_index % 2 == 0);
     var is_game_reply = (current_text_index % 2 != 0 && current_text_index >= 13 && current_text_index <= 25);
-
     if (current_text_index == array_length(history_texts) - 1) {
         var p1 = "Tomorrow will be a better ";
         var p2 = "DAY.";
@@ -66,8 +61,17 @@ if (current_text_index < array_length(history_texts)) {
         draw_set_color(c_white);
         draw_text_ext_transformed(base_x, gui_h / 2, history_texts[current_text_index], 28, gui_w - 200, text_scale, text_scale, 0);
     }
+    if (show_skip_prompt) {
+        var alpha = 0.5 + sin(current_time / 500) * 0.5;
+        draw_set_font(global.fonteLegenda);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_bottom);
+        draw_set_color(c_white);
+        draw_set_alpha(alpha);
+        draw_text(gui_w / 2, gui_h - 20, "[X] to skip introduction");
+        draw_set_alpha(1);
+    }
 }
-
 if (show_menu_buttons && !config_open && !is_transitioning) {
     draw_set_font(global.fonteNormal);
     draw_set_halign(fa_center);
@@ -78,68 +82,121 @@ if (show_menu_buttons && !config_open && !is_transitioning) {
     for (var i = 0; i < array_length(main_options); i++) {
         var final_x = base_x;
         var final_y = menu_start_y + (i * menu_spacing);
-        draw_set_color(menu_index == i ? c_aqua : c_white);
+        var is_load = (main_options[i] == "LOAD SAVE");
+        if (is_load && shake_load > 0) final_x += random_range(-shake_load/4, shake_load/4);
+        if (is_load && error_flash_load > 0) draw_set_color(c_red);
+        else draw_set_color(menu_index == i ? c_aqua : c_white);
         var label = menu_index == i ? "[ " + main_options[i] + " ]" : main_options[i];
         draw_text_transformed(final_x, final_y, label, text_scale, text_scale, 0);
     }
 }
-
 if (config_y > -350) {
+    var box_height = 340;
     draw_set_alpha(1.0);
     draw_set_color(c_black);
-    draw_rectangle(50, config_y + 10, gui_w - 50, config_y + 320, false);
+    draw_rectangle(50, config_y + 10, gui_w - 50, config_y + 10 + box_height, false);
     draw_set_color(c_aqua);
     draw_line_width(50, config_y + 10, gui_w - 50, config_y + 10, 4);
-    draw_line_width(50, config_y + 320, gui_w - 50, config_y + 320, 4);
-    draw_line_width(50, config_y + 10, 50, config_y + 320, 4);
-    draw_line_width(gui_w - 50, config_y + 10, gui_w - 50, config_y + 320, 4);
-
+    draw_line_width(50, config_y + 10 + box_height, gui_w - 50, config_y + 10 + box_height, 4);
+    draw_line_width(50, config_y + 10, 50, config_y + 10 + box_height, 4);
+    draw_line_width(gui_w - 50, config_y + 10, gui_w - 50, config_y + 10 + box_height, 4);
     draw_set_font(global.fonteNormal);
     draw_set_valign(fa_top);
-    var tabs = ["GRAPHICS", "GAME", "CONTROLS"];
+    var tabs = ["GRAPHICS", "CONTROLS", "SUPPORT"];
     var t_w = (gui_w - 100) / 3;
     for (var i = 0; i < 3; i++) {
         draw_set_color(config_tab == i ? c_aqua : c_white);
         var tab_label = config_tab == i ? "[ " + tabs[i] + " ]" : tabs[i];
         draw_text(50 + (t_w * i) + (t_w / 2), config_y + 25, tab_label);
     }
-
     var inner_y = config_y + 80;
     if (config_tab == 0) {
-        var res = resolutions[resolution_index];
-        var opt_text = [
-            "RESOLUTION: " + string(res[0]) + "x" + string(res[1]),
-            "CONTRAST: " + string(round(global.contrast_value * 100)) + "%",
-            "TEXT SCALE: " + string(round(text_scale * 100)) + "%"
-        ];
-        for (var i = 0; i < 3; i++) {
-            draw_set_color(config_idx == i ? c_aqua : c_white);
-            draw_text(base_x, inner_y + (i * 45), opt_text[i]);
-        }
+        draw_set_halign(fa_center);
+        draw_set_color(config_idx == 0 ? c_aqua : c_white);
+        draw_text(base_x, inner_y, "FULLSCREEN: " + (global.fullscreen ? "ON" : "OFF"));
     } else if (config_tab == 1) {
-        var opt_text = ["SAVE GAME", "LOAD GAME", "EXIT TO DESKTOP"];
-        for (var i = 0; i < 3; i++) {
-            draw_set_color(config_idx == i ? c_aqua : c_white);
-            draw_text(base_x, inner_y + (i * 45), opt_text[i]);
-        }
+        draw_set_halign(fa_center);
+        draw_set_color(c_white);
+        draw_text(base_x, inner_y, "MOVE: ARROW KEYS");
+        draw_text(base_x, inner_y + 40, "SPRINT: SHIFT");
+        draw_text(base_x, inner_y + 80, "CONFIRM / ACTION: Z");
+        draw_text(base_x, inner_y + 120, "CANCEL / BACK: X");
+        draw_set_color(make_color_rgb(80, 80, 80));
+        draw_text(base_x, inner_y + 180, "[ PRESS X TO RETURN ]");
     } else if (config_tab == 2) {
-        for (var i = 0; i < array_length(controls); i++) {
-            draw_set_color(config_idx == i ? c_aqua : c_white);
-            var k_code = controls[i][1];
-            var k_string = "UNKNOWN";
-            switch (k_code) {
-                case vk_left:  k_string = "LEFT ARROW"; break;
-                case vk_right: k_string = "RIGHT ARROW"; break;
-                case vk_up:    k_string = "UP ARROW"; break;
-                case vk_down:  k_string = "DOWN ARROW"; break;
-                case ord("Z"): k_string = "Z"; break;
-                case ord("X"): k_string = "X"; break;
-                default:       k_string = chr(k_code); break;
-            }
-            var key_name = is_rebinding && config_idx == i ? "PRESS ANY KEY..." : k_string;
-            draw_text(base_x, inner_y + (i * 45), controls[i][0] + ": " + key_name);
+        draw_set_halign(fa_center);
+        draw_set_color(c_white);
+        draw_text(base_x, inner_y, "SUPPORT THE GAME");
+        draw_set_color(make_color_rgb(160, 160, 160));
+        draw_text(base_x, inner_y + 50, "Visit our Itch.io page:");
+        draw_set_color(c_yellow);
+        draw_text(base_x, inner_y + 90, "https://somiari.itch.io/insomnia");
+        draw_set_color(make_color_rgb(160, 160, 160));
+        draw_text(base_x, inner_y + 140, "Your support helps us keep developing!");
+        draw_set_color(c_white);
+        if (config_idx == 0) {
+            draw_set_color(c_yellow);
+            draw_text(base_x, inner_y + 200, "* VISIT PAGE *");
+        } else {
+            draw_set_color(c_white);
+            draw_text(base_x, inner_y + 200, "VISIT PAGE");
         }
     }
+}
+
+if (menu_sub_state == "submenu_load_info") {
+    draw_set_color(c_black);
+    draw_set_alpha(0.85);
+    draw_rectangle(40, config_y + 10, gui_w - 40, config_y + 400, false);
+    draw_set_alpha(1.0);
+    var box_w = 560;
+    var box_h = 280;
+    var bx1 = base_x - (box_w / 2);
+    var by1 = (gui_h / 2) - (box_h / 2) + config_y;
+    var bx2 = base_x + (box_w / 2);
+    var by2 = (gui_h / 2) + (box_h / 2) + config_y;
+    draw_set_color(c_black);
+    draw_rectangle(bx1, by1, bx2, by2, false);
+    draw_set_color(c_white);
+    draw_rectangle(bx1, by1, bx2, by2, true);
+    draw_set_color(c_white);
+    draw_line_width(bx1, by1, bx2, by1, 8);
+    draw_line_width(bx1, by2, bx2, by2, 8);
+    draw_line_width(bx1, by1, bx1, by2, 8);
+    draw_line_width(bx2, by1, bx2, by2, 8);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    var ox = bx1 + 50;
+    var oy = by1 + 45;
+    draw_set_color(c_white);
+    draw_text(ox, oy, "* LOAD GAME *");
+    if (file_exists("save.json")) {
+        var _f = file_text_open_read("save.json");
+        var _json = file_text_read_string(_f);
+        file_text_close(_f);
+        var _data = json_parse(_json);
+        draw_set_color(make_color_rgb(180, 180, 180));
+        draw_text(ox, oy + 50, "NAME");
+        draw_set_color(c_white);
+        draw_text(ox + 100, oy + 50, "ABBY");
+        draw_set_color(make_color_rgb(180, 180, 180));
+        draw_text(ox, oy + 80, "HP");
+        draw_set_color(c_white);
+        draw_text(ox + 100, oy + 80, string(_data.hp) + "/" + string(_data.hp_max));
+        draw_set_color(make_color_rgb(180, 180, 180));
+        draw_text(ox, oy + 110, "ITEMS");
+        draw_set_color(c_white);
+        var inv_count = array_length(_data.inventory);
+        draw_text(ox + 100, oy + 110, string(inv_count) + " ITEMS");
+        draw_set_color(make_color_rgb(160, 160, 160));
+        draw_text(base_x, by2 - 40, "Z - LOAD / X - CANCEL");
+    } else {
+        draw_set_color(make_color_rgb(80, 80, 80));
+        draw_text(ox, oy + 50, "NO SAVE DATA FOUND");
+        draw_set_color(make_color_rgb(160, 160, 160));
+        draw_text(ox, oy + 90, "PRESS Z OR X TO RETURN");
+    }
+    draw_set_valign(fa_top);
 }
 
 for (var i = 0; i < array_length(shatter_particles); i++) {
@@ -149,7 +206,6 @@ for (var i = 0; i < array_length(shatter_particles); i++) {
     draw_rectangle(p.xx, p.yy, p.xx + choose(2,3), p.yy + choose(2,3), false);
 }
 draw_set_alpha(1.0);
-
 if (is_transitioning) {
     draw_set_color(c_aqua);
     draw_set_alpha(1.0);

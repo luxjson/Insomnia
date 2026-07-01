@@ -3,7 +3,6 @@ vspd = 0;
 spd = 4.5;
 state = "idle"; 
 dir = 0; 
-
 spr_idle  = sprPlayerIdle;
 spr_walk  = sprPlayerWalk;
 spr_dash  = sprPlayerDash;

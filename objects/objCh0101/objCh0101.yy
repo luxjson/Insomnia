@@ -9,8 +9,8 @@
   "name":"objCh0101",
   "overriddenProperties":[],
   "parent":{
-    "name":"Chapter01",
-    "path":"folders/obj/Chapter01.yy",
+    "name":"Maze Of Memories",
+    "path":"folders/Objects/Chapter01/Maze Of Memories.yy",
   },
   "parentObjectId":null,
   "persistent":false,

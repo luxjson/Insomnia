@@ -10,8 +10,8 @@
   "name":"objDeveloping",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Extra",
+    "path":"folders/Objects/Extra.yy",
   },
   "parentObjectId":null,
   "persistent":false,

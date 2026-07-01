@@ -10,8 +10,8 @@
   "name":"objGameOver",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"UI",
+    "path":"folders/Objects/Global/UI.yy",
   },
   "parentObjectId":null,
   "persistent":false,

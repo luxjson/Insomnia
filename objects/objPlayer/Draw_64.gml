@@ -65,7 +65,7 @@ if (config_tab == 0) {
     
     draw_set_halign(fa_right);
     draw_set_color(c_white);
-    draw_text(card_x + 340, card_y + 35, string(hp_actual) + "/" + string(hp_max));
+    draw_text(card_x + 413, card_y + 35, string(hp_actual) + "/" + string(hp_max));
     draw_set_halign(fa_left);
     
     draw_set_color(make_color_rgb(180, 180, 180));
@@ -77,7 +77,7 @@ if (config_tab == 0) {
     
     draw_set_halign(fa_right);
     draw_set_color(c_white);
-    draw_text(card_x + 340, card_y + 65, string(stat_atk));
+    draw_text(card_x + 370, card_y + 65, string(stat_atk));
     draw_set_halign(fa_left);
     
     draw_set_color(make_color_rgb(180, 180, 180));
@@ -89,7 +89,7 @@ if (config_tab == 0) {
     
     draw_set_halign(fa_right);
     draw_set_color(c_white);
-    draw_text(card_x + 340, card_y + 95, string(stat_def));
+    draw_text(card_x + 370, card_y + 95, string(stat_def));
     draw_set_halign(fa_left);
     
     draw_set_color(make_color_rgb(80, 80, 80));
@@ -184,10 +184,11 @@ if (config_tab == 2) {
         draw_text(base_x, inner_y, "--- CONTROLS ---");
         draw_set_color(make_color_rgb(160, 160, 160));
         draw_text(base_x, inner_y + 40, "MOVE: ARROW KEYS");
-        draw_text(base_x, inner_y + 80, "CONFIRM / ACTION: Z");
-        draw_text(base_x, inner_y + 120, "CANCEL / BACK: X");
+		draw_text(base_x, inner_y + 80, "SPRINT: SHIFT");
+        draw_text(base_x, inner_y + 120, "CONFIRM / ACTION: Z");
+        draw_text(base_x, inner_y + 160, "CANCEL / BACK: X");
         draw_set_color(make_color_rgb(80, 80, 80));
-        draw_text(base_x, inner_y + 180, "[ PRESS Z OR X TO RETURN ]");
+        draw_text(base_x, inner_y + 220, "[ PRESS Z OR X TO RETURN ]");
     }
     
     if (menu_sub_state == "submenu_game") {

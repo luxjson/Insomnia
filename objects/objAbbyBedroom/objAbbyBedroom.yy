@@ -1,6 +1,6 @@
 {
   "$GMObject":"",
-  "%Name":"objCenaInicial",
+  "%Name":"objAbbyBedroom",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":2,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
@@ -8,11 +8,11 @@
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":64,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"objCenaInicial",
+  "name":"objAbbyBedroom",
   "overriddenProperties":[],
   "parent":{
-    "name":"obj",
-    "path":"folders/obj.yy",
+    "name":"Abby's Bedroom",
+    "path":"folders/Objects/Chapter01/Abby's Bedroom.yy",
   },
   "parentObjectId":null,
   "persistent":false,

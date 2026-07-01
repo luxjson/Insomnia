@@ -14,8 +14,8 @@
   "exportDir":"",
   "name":"mus_chapter1Maze",
   "parent":{
-    "name":"snd",
-    "path":"folders/snd.yy",
+    "name":"Sounds and Musics",
+    "path":"folders/Sounds and Musics.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

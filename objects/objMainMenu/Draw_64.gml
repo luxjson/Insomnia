@@ -35,7 +35,9 @@ if (current_state == MENU_STATE.MAIN) {
 				audio_sound_gain(sfx, global.vol_sfx, 0);
                 switch (i) {
                     case 0:
-						fade_target_room = rm_loading
+						with (instance_create_depth(0, 0, -10000, objLoading)) {
+						    target_room = rm_game;
+						}
                         is_fading = true;
                         break;
                     case 1:

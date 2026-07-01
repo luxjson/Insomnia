@@ -20,7 +20,7 @@
   "name":"rm_dev",
   "parent":{
     "name":"Extra",
-    "path":"folders/rooms/Extra.yy",
+    "path":"folders/Rooms/Extra.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

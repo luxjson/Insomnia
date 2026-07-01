@@ -119,8 +119,8 @@
   "maintainGms1Font":false,
   "name":"fontMenu",
   "parent":{
-    "name":"fnt",
-    "path":"folders/fnt.yy",
+    "name":"Fonts Import",
+    "path":"folders/Fonts Import.yy",
   },
   "pointRounding":0,
   "ranges":[
