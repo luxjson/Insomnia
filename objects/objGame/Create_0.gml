@@ -1,3 +1,5 @@
+global.isMila = false
+
 enum MENU_STATE_2 { MAIN, SETTINGS, CREDITS }
 current_state = MENU_STATE_2.MAIN;
 menu_alpha = 1.0;
@@ -136,3 +138,4 @@ for (var i = 0; i < slice_count; i++) slice_speeds[i] = random_range(15, 30);
 transition_timer = 0;
 show_skip_prompt = false;
 game_version = "v0.11b";
+load_menu_cooldown = 0;

@@ -7,6 +7,12 @@ spr_idle  = sprPlayerIdle;
 spr_walk  = sprPlayerWalk;
 spr_dash  = sprPlayerDash;
 spr_death = sprPlayerDeath;
+
+spr_idle_mila = sprMilaIdle;
+spr_death_mila = sprMilaDeath
+spr_dash_mila = sprMilaDash
+spr_walk_mila =	sprMilaWalk
+
 save_menu_open = false;
 array_inventario = [];
 

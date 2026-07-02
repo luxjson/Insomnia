@@ -1,9 +1,39 @@
 if (game_starting) exit;
 if (config_cooldown > 0) config_cooldown--;
+
 var key_z = keyboard_check_pressed(ord("Z"));
 var key_x = keyboard_check_pressed(ord("X"));
 var key_menu = keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_escape);
 var play_beep = false;
+
+if (menu_sub_state == "submenu_load_info") {
+    if (load_menu_cooldown > 0) {
+        load_menu_cooldown--;
+    }
+    if (key_z && load_menu_cooldown == 0) {
+        play_beep = true;
+        if (file_exists("save.json")) {
+            var _f = file_text_open_read("save.json");
+            var _json = file_text_read_string(_f);
+            file_text_close(_f);
+            global.load_data = json_parse(_json);
+            with (instance_create_depth(0, 0, -10000, objTransition)) {
+                target_room = asset_get_index(global.load_data.room_name);
+            }
+        }
+        menu_sub_state = "main";
+    }
+    if (key_x) {
+        menu_sub_state = "main";
+        play_beep = true;
+        load_menu_cooldown = 0;
+    }
+    if (play_beep) {
+        var sfx = audio_play_sound(Beep, 1, false);
+        audio_sound_gain(sfx, global.vol_sfx, 0);
+    }
+    exit;
+}
 
 if (key_menu && !config_open && !is_transitioning && show_menu_buttons) {
     config_open = true;
@@ -101,6 +131,7 @@ if (!config_open && !save_menu_open && !is_transitioning) {
                 case 1:
                     if (has_any_save) {
                         menu_sub_state = "submenu_load_info";
+                        load_menu_cooldown = 10;
                         play_beep = true;
                     } else {
                         shake_load = 30;
@@ -134,7 +165,7 @@ if (config_open) {
         var max_idx;
         switch (config_tab) {
             case 0: max_idx = 0; break;
-            case 1: max_idx = 2; break;
+            case 1: max_idx = 1; break;
             case 2: max_idx = array_length(controls) - 1; break;
             case 3: max_idx = 0; break;
         }
@@ -171,10 +202,6 @@ if (config_open) {
                     ini_close();
                     play_beep = true;
                 }
-                if (config_idx == 2) {
-                    config_target_y = -400;
-                    play_beep = true;
-                }
             }
         }
         if (config_tab == 2) {
@@ -185,18 +212,6 @@ if (config_open) {
                 play_beep = true;
             }
         }
-    }
-}
-
-if (menu_sub_state == "submenu_load_info") {
-    if (key_z) {
-        scr_load_game("save.json");
-        play_beep = true;
-        menu_sub_state = "main";
-    }
-    if (key_x) {
-        menu_sub_state = "main";
-        play_beep = true;
     }
 }
 

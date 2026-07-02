@@ -53,8 +53,11 @@ if (config_tab == 0) {
     
     draw_set_halign(fa_left);
     draw_set_color(c_white);
-    draw_text(card_x, card_y, "> " + string_upper("ABBY") + " <");
-    
+	if (global.isMila) {
+		draw_text(card_x, card_y, "> " + string_upper("MILA") + " <");
+	} else {
+		draw_text(card_x, card_y, "> " + string_upper("ABBY") + " <");
+	}
     draw_set_color(make_color_rgb(180, 180, 180));
     draw_text(card_x, card_y + 35, "HP");
     
@@ -286,7 +289,7 @@ if (menu_sub_state == "submenu_load_info") {
         draw_set_color(make_color_rgb(180, 180, 180));
         draw_text(ox, oy + 50, "NAME");
         draw_set_color(c_white);
-        draw_text(ox + 100, oy + 50, "ABBY");
+        draw_text(ox + 100, oy + 50, "???");
         
         draw_set_color(make_color_rgb(180, 180, 180));
         draw_text(ox, oy + 80, "HP");

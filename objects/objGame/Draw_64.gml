@@ -120,8 +120,8 @@ if (config_y > -350) {
         draw_set_color(config_idx == 0 ? c_aqua : c_white);
         draw_text(base_x, inner_y, "FULLSCREEN: " + (global.fullscreen ? "ON" : "OFF"));
     } else if (config_tab == 1) {
-        var opt_text = ["BGM VOLUME: " + string(round(global.vol_bgm * 100)) + "%", "SFX VOLUME: " + string(round(global.vol_sfx * 100)) + "%", "BACK"];
-        for (var i = 0; i < 3; i++) {
+        var opt_text = ["BGM VOLUME: " + string(round(global.vol_bgm * 100)) + "%", "SFX VOLUME: " + string(round(global.vol_sfx * 100)) + "%"];
+        for (var i = 0; i < 2; i++) {
             draw_set_halign(fa_center);
             draw_set_color(config_idx == i ? c_aqua : c_white);
             draw_text(base_x, inner_y + (i * 45), opt_text[i]);
@@ -160,13 +160,14 @@ if (menu_sub_state == "submenu_load_info") {
     draw_set_color(c_black);
     draw_set_alpha(0.85);
     draw_rectangle(40, config_y + 10, gui_w - 40, config_y + 400, false);
+	draw_set_font(global.fonteNormal)
     draw_set_alpha(1.0);
     var box_w = 560;
     var box_h = 280;
     var bx1 = base_x - (box_w / 2);
-    var by1 = (gui_h / 2) - (box_h / 2) + config_y;
+    var by1 = (gui_h / 2) - (box_h / 2);
     var bx2 = base_x + (box_w / 2);
-    var by2 = (gui_h / 2) + (box_h / 2) + config_y;
+    var by2 = (gui_h / 2) + (box_h / 2);
     draw_set_color(c_black);
     draw_rectangle(bx1, by1, bx2, by2, false);
     draw_set_color(c_white);
@@ -190,7 +191,7 @@ if (menu_sub_state == "submenu_load_info") {
         draw_set_color(make_color_rgb(180, 180, 180));
         draw_text(ox, oy + 50, "NAME");
         draw_set_color(c_white);
-        draw_text(ox + 100, oy + 50, "ABBY");
+        draw_text(ox + 100, oy + 50, "???");
         draw_set_color(make_color_rgb(180, 180, 180));
         draw_text(ox, oy + 80, "HP");
         draw_set_color(c_white);

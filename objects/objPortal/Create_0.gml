@@ -6,4 +6,4 @@ trigger_distance = 50;
 show_prompt = false;
 interact_text = "Press Z to enter the portal";
 transitioning = false;
-target_room = rm_AbbyBedroom;
+target_room = rm_dev;

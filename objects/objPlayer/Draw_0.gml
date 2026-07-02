@@ -1,8 +1,17 @@
-var active_sheet = spr_idle;
+var active_sheet = (global.isMila) ? spr_idle_mila : spr_idle;
+
 switch (state) {
-    case "walk":  active_sheet = spr_walk;  break;
-    case "dash":  active_sheet = spr_dash;  break;
-    case "death": active_sheet = spr_death; break;
+    case "walk":  
+        active_sheet = (global.isMila) ? spr_walk_mila : spr_walk;  
+        break;
+        
+    case "dash":  
+        active_sheet = (global.isMila) ? spr_dash_mila : spr_dash;  
+        break;
+        
+    case "death": 
+        active_sheet = (global.isMila) ? spr_death_mila : spr_death; 
+        break;
 }
 
 if (sprite_exists(sprShadow)) {

@@ -8,7 +8,7 @@ controls_list = [
     "[F4] - Fullscreen",
     "When HP is 0, you lose."
 ];
-title_text = "INSOMNIA v0.12b (C) SOMIARI GAMES";
+title_text = "INSOMNIA v0.11b (C) SOMIARI GAMES";
 target_menu_room = rm_Intro;
 
 if (!variable_global_exists("vol_bgm")) global.vol_bgm = 1.0;

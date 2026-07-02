@@ -11,7 +11,7 @@ if (alpha > 0) {
 
 if (text_alpha > 0) {
     draw_set_alpha(text_alpha);
-    draw_set_font(global.fonteTitulo);
+    draw_set_font(global.fonteTitulo2);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
     draw_set_color(c_white);
@@ -32,18 +32,4 @@ if (version_alpha > 0) {
     draw_set_alpha(1);
 }
 
-for (var i = 0; i < array_length(firework_particles); i++) {
-    var p = firework_particles[i];
-    draw_set_color(c_red);
-    draw_set_alpha(p.alpha);
-    draw_circle(p.x, p.y, p.size, false);
-}
-draw_set_alpha(1);
-
-for (var i = 0; i < array_length(explosion_particles); i++) {
-    var p = explosion_particles[i];
-    draw_set_color(p.color);
-    draw_set_alpha(p.alpha);
-    draw_rectangle(p.x - p.size/2, p.y - p.size/2, p.x + p.size/2, p.y + p.size/2, true);
-}
 draw_set_alpha(1);

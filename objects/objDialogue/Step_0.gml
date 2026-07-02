@@ -7,7 +7,7 @@ var key_right = keyboard_check_pressed(vk_down);
 if (char_index < string_length(msg_text)) {
     is_typing = true;
     
-    var current_speed = (msg_name == "Mom") ? (msg_speed * 2) : msg_speed;
+    var current_speed = msg_speed;
     text_cooldown += current_speed;
     
     if (text_cooldown >= 1) {
